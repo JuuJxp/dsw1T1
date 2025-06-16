@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cadastro de Usuário</title>
+</head>
+<body>
+    <section class="layout-content" layout:fragment="corpo">
+
+        <nav class="navbar navbar-expand-md bg-light">
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><i class="oi oi-caret-right"></i>
+                        <span>Cadastrar Usuários</span></li>
+                </ul>
+                <a class="btn btn-primary btn-md" th:href="@{/usuarios/listar}"
+                    role="button"> <span class="oi oi-spreadsheet" title="Listar"
+                    aria-hidden="true"></span> <span>Listar Usuários</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="container" id="cadastro">
+
+            <!-- Fragmento para exibir alertas de sucesso ou falha -->
+            <div th:replace="fragments/alert"></div>
+
+            <form
+                th:action="${usuario.id == null} ? @{/usuarios/salvar} : @{/usuarios/editar}"
+                th:object="${usuario}" method="POST">
+                
+                <!-- Campo oculto para o ID, usado para diferenciar cadastro de edição -->
+                <input type="hidden" id="id" th:field="*{id}" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label> 
+                        <input type="email" class="form-control" id="email" placeholder="email@example.com"
+                            autofocus="autofocus" th:field="*{email}"
+                            th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
+
+                        <div class="invalid-feedback">
+                            <span th:errors="*{email}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="senha">Senha</label> 
+                        <input type="password" class="form-control" id="senha" placeholder="Digite sua senha"
+                            th:field="*{senha}"
+                            th:classappend="${#fields.hasErrors('senha')} ? is-invalid" />
+                                     
+                        <div class="invalid-feedback">
+                            <span th:errors="*{senha}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="papel">Tipo de Usuário</label>
+                        <select class="form-control" id="papel" th:field="*{papel}"
+                                th:classappend="${#fields.hasErrors('papel')} ? is-invalid">
+                            <option value="">Selecione...</option>
+                            <option th:each="p : ${T(br.ufscar.dc.dsw.domain.PapelUsuario).values()}"
+                                    th:value="${p}" th:text="${p.name()}"></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            <span th:errors="*{papel}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-sm">Continuar</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
