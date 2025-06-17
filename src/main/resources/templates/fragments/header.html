@@ -2,18 +2,16 @@
 <html>
 <head><meta charset="UTF-8"></head>
 <body>
-	<header th:fragment="cabecalho">
-		<nav
-			class="navbar navbar-inverse navbar navbar-dark bg-dark fixed-top">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="btn btn-dark navbar-toggle pull-left">
-						<i class="oi oi-menu"></i>
-					</button>
-					<a class="navbar-brand " th:href="@{/}"> BetWin Vagas</a>
-				</div>
-			</div>
-		</nav>
-	</header>
+    <header th:fragment="cabecalho">
+        <nav class="header">
+            <div class="header-title">
+                <a th:href="@{/}">Procurando por vagas? Lugar certo!</a>
+            </div>
+            <div class="header-buttons">
+                <a class="button-style" th:href="@{/perfilAdministrador}">Perfil</a>
+                <a class="button-style" th:href="@{/logout}">Sair</a>
+            </div>
+        </nav>
+    </header>
 </body>
 </html>

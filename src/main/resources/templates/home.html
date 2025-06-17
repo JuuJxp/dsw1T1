@@ -6,9 +6,13 @@
 <body>
 	<section class="layout-content" layout:fragment="corpo">
 
-		<div class="container" style="text-align: center;">
+		<div class="container" style="text-align: center; width: 60%">
 			<h1>Betwin Vagas</h1>
-			<img alt="" th:src="@{/image/image.png}" style="width:500px;">
+			<img alt="" th:src="@{/image/image.png}" style="width:350px;">
+			<div style="display: flex; justify-content: center; align-items: center; flex-direction: row;">
+				<input type="text" class="form-control" id="search" placeholder="Cidade, estado, país...">
+				<button class="button-style">Buscar</button>
+			</div>
 		</div>
 
 	</section>

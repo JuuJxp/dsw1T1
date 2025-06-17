@@ -1,27 +1,18 @@
-/*
- * Base structure
- */
 html, body {
 	height: 100%;
 }
 
 body {
-	padding-top: 56px;
+	padding-top: 0;
 	padding-left: 0;
 } 
 
-/*
- * main layout
- */
 .layout-main {
     display: flex;
     min-height: calc(80vh - 52px);
     overflow: hidden;
 }
 
-/*
- * Content
- */
 .layout-content {
     width: 100%;
     padding-top: 0px;
@@ -32,83 +23,11 @@ body {
 	padding-top: 20px;
 }
 
-/*
- * Sidebar
- */
-.sidebar {
-    width: 0px;
-    height: 80vh;
-    border-top: 1px solid #eee;
-    border-right: 1px solid #eee;    
-    background-color: #faf8fa;
-    flex-shrink: 0;
-    overflow: hidden;
-    transition: width .5s;
-}
-
-.sidebar .nav {
-	margin-bottom: 0px;
-}
-
-.sidebar .nav-item {
-	width: 100%;
-}
-
-.sidebar .nav-item {
-	margin-left: 0;
-}
-
-.sidebar .nav-link {
-	border-radius: 0;
-} 
-
-.sidebar ul li:hover a, .menu ul li.active a{
-    color: #777777;
-}
-
-.sidebar ul{
-    list-style: none;
-    padding: 10px 0px;
-}
-
-.sidebar ul li a{
-    display: block;
-    color:#1a1a1a;
-    padding: 10px 15px;
-    white-space: nowrap;
-}
-
-.sidebar.sidebar-open {
-    width: 300px;
-}
-
-/*
- * nav-pills home
- */
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-	color: #fff;
-	background-color: #5a1287;
-}
-
-/*
- * toogle do navbar do menu
- */ 
-
-.navbar-toggle {
-    display: inline-block;
-    margin-left: 10px;
-}
-
-/*
- * Footer
- */
+/* FOOTER */
 .layout-footer {
 	position: relative;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: 0;
-	height: 50px;
+	left: 0; right: 0; bottom: 0; margin: 0;
+	height: 30px;
 	border-top: 1px solid #eeeeee;
 }
 
@@ -118,3 +37,76 @@ body {
 	color: #777777;
 	text-align: center;
 }
+/* FIM FOOTER */
+
+/* HEADER */
+.header {
+    background-color: #330044;
+    color: #FFFFFF; 
+    padding: 15px 20px; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.header-title a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.header-buttons {
+    display: flex;
+}
+
+.header-buttons .button-style{
+    margin-left: 10px;
+}
+
+.button-style {
+    background-color: #550066; 
+    color: #FFFFFF; 
+    border: none; 
+    padding: 8px 15px;
+    border-radius: 5px; 
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.button-style:hover {
+    background-color: #770099; 
+    color: #FFFFFF;
+    text-decoration: none;
+}
+/* FIM HEADER */
+
+/* PAGINAS PROFILE */
+.profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            margin-top: 0;
+            padding: 30px;
+            text-align: center;
+        }
+
+.title-text {
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+    font-size: 2.2em;
+    color: #550066;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+/* FIM PAGINAS PROFILE */

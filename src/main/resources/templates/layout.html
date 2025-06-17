@@ -28,12 +28,6 @@
 	</header>
 
 	<div class="layout-main">
-		<aside>
-			<nav th:replace="fragments/sidebar :: nav-sidebar">
-				<span>menu</span>
-			</nav>
-		</aside>
-
 		<section layout:fragment="corpo">
 			<div>conteúdo principal das páginas</div>
 		</section>
@@ -42,10 +36,7 @@
 	<footer th:replace="fragments/footer :: rodape">
 		<div>footer</div>
 	</footer>
-
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
+	
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/jquery-mask-plugin/dist/jquery.mask.min.js}"></script>
 	<script
