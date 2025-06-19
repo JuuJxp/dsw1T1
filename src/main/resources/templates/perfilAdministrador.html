@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perfil do Admin</title>
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            margin-top: 0;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .title-text {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+            font-size: 2.2em;
+            color: #550066;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+        <div class="profile-container" layout:fragment="corpo">
+
+            <div class="title-text">
+                <br>Bem vindo de volta!
+                <br>o que deseja?
+            </div>
+
+            <div class="button-group">
+                <a class="button-style" th:href="@{/usuarios/editar/id_usuario}">Alterar meus dados</a>
+                
+                <a class="button-style" th:href="@{/profissionais/listar}">Ver Profissionais</a>
+                
+                <a class="button-style" th:href="@{/empresas/listar}">Ver Empresas</a>
+            </div>
+        </div>
+
+    </section>
+</body>
+</html>

@@ -9,4 +9,8 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+	@GetMapping("/perfilAdministrador")
+	public String perfilAdministrador() {
+		return "perfilAdministrador";
+	}
 }
