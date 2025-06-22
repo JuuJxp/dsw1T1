@@ -1,21 +1,25 @@
 package br.ufscar.dc.dsw.domain;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Email;
-import java.sql.Timestamp;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Usuarios")
+@Inheritance(strategy = InheritanceType.JOINED) 
 @AttributeOverride(name = "id", column = @Column(name = "id_usuario")) 
-public class Usuario extends AbstractEntity<Long> {
+public abstract class Usuario extends AbstractEntity<Long> {
 
     // Atributo email (não vazio, tamanho máximo 255 caracteres, deve ser um email válido)
 	@NotBlank(message = "{NotBlank.usuario.email}")
@@ -34,6 +38,9 @@ public class Usuario extends AbstractEntity<Long> {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private PapelUsuario papel;
+
+    @Column(nullable = false)
+    private boolean ativo;
     
     // Campos de data/hora 
     @Column(name = "criado_em", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -72,5 +79,17 @@ public class Usuario extends AbstractEntity<Long> {
 
     public Timestamp getAtualizadoEm() {
         return atualizadoEm;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Usuario() {
+        this.ativo = true;
     }
 }
