@@ -7,7 +7,7 @@
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
-            <h1 class="title-text" style="font-size: 2em;">Gerenciar Candidaturas para a Vaga</h1>
+            <h1 class="title-text" style="font-size: 2em;">Gerenciar candidaturas da vaga</h1>
             
             <div class="job-card" style="width: 80%;">
                 <div class="job-card-header">
@@ -29,7 +29,7 @@
             <h2 class="title-text" style="font-size: 1.5em; color:black; margin-top: 30px;">Candidatos</h2>
             <div th:replace="fragments/alert"></div>
 
-            <table class="table-candidaturas" style="width: 80%;">
+            <table class="table-lista" style="width: 80%;">
                 <thead>
                     <tr>
                         <th>Candidato</th>
@@ -59,9 +59,9 @@
                                             th:selected="${statusOption == candidatura.statusVaga}"></option>
                                 </select>
                                 <input type="text" name="linkEntrevista" placeholder="Link da entrevista (se ENTREVISTA)" 
-                                       th:value="${candidatura.statusVaga == T(br.ufscar.dc.dsw.domain.StatusCandidatura).ENTREVISTA ? 'Link anterior aqui' : ''}" 
+                                       th:value="${candidatura.statusVaga == T(br.ufscar.dc.dsw.domain.StatusCandidatura).ENTREVISTA ? 'ENVIADO' : ''}" 
                                        style="width: 200px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;"/>
-                                <button type="submit" class="button-update">Atualizar</button>
+                                <button type="submit" class="button-style">Atualizar</button>
                             </form>
                         </td>
                     </tr>
@@ -72,7 +72,7 @@
             </table>
 
             <div class="center" style="margin-block: 20px;">
-                <a class="button-style" th:href="@{/vagas/minhasVagas}" role="button">Voltar para Minhas Vagas</a>
+                <a class="button-style" th:href="@{/vagas/minhasVagas}" role="button">Voltar para minhas vagas</a>
             </div>
 
         </div>
