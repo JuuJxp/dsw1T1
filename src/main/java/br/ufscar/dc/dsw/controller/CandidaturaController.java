@@ -19,6 +19,7 @@ import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.StatusCandidatura;
 import br.ufscar.dc.dsw.domain.Vaga;
 import br.ufscar.dc.dsw.service.spec.ICandidaturaService;
+import br.ufscar.dc.dsw.service.spec.IEmailService;
 import br.ufscar.dc.dsw.service.spec.IEmpresaService;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
 import br.ufscar.dc.dsw.service.spec.IVagaService;
@@ -35,6 +36,9 @@ public class CandidaturaController {
 
     @Autowired
     private IVagaService vagaService;
+
+    @Autowired
+    private IEmailService emailService;
 
     @Autowired
     private IEmpresaService empresaService;
@@ -135,10 +139,30 @@ public class CandidaturaController {
         candidatura.setStatusVaga(status);
         candidaturaService.salvar(candidatura);
 
+        String emailCandidato = candidatura.getProfissional().getEmail();
+        String nomeCandidato = candidatura.getProfissional().getNome();
+        String tituloVaga = candidatura.getVaga().getTitulo();
+        String nomeEmpresa = empresa.getNome();
+        String assunto = "Atualização sobre sua candidatura para a vaga: " + tituloVaga;
+
         if (status == StatusCandidatura.ENTREVISTA) {
-            attr.addFlashAttribute("sucess", "Status atualizado para ENTREVISTA. E-mail com link será enviado.");
+            String corpoEmail = String.format(
+                "Olá, %s!\n\nÓtimas notícias! A empresa %s gostaria de te convidar para uma entrevista para a vaga de %s.\n\nA entrevista será realizada através do seguinte link: %s\n\nBoa sorte!\n\nAtenciosamente,\nEquipe Betwin Vagas",
+                nomeCandidato, nomeEmpresa, tituloVaga, linkEntrevista
+            );
+            emailService.sendEmail(emailCandidato, assunto, corpoEmail);
+            attr.addFlashAttribute("sucess", "Status atualizado para ENTREVISTA e e-mail enviado ao candidato.");
+        
+        } else if (status == StatusCandidatura.NAO_SELECIONADO) {
+            String corpoEmail = String.format(
+                "Olá, %s.\n\nAgradecemos seu interesse na vaga de %s na empresa %s. No momento, optamos por seguir com outros candidatos.\n\nAgradecemos sua participação e desejamos sucesso em sua busca por novas oportunidades.\n\nAtenciosamente,\nEquipe Betwin Vagas",
+                nomeCandidato, tituloVaga, nomeEmpresa
+            );
+            emailService.sendEmail(emailCandidato, assunto, corpoEmail);
+            attr.addFlashAttribute("sucess", "Status atualizado para NÃO SELECIONADO e e-mail de notificação enviado.");
+        
         } else {
-            attr.addFlashAttribute("sucess", "Status da candidatura atualizado para " + status.name() + ".");
+             attr.addFlashAttribute("sucess", "Status da candidatura atualizado para " + status.name() + ".");
         }
         
         return "redirect:/candidaturas/gerenciar/" + candidatura.getVaga().getId();

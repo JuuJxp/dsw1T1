@@ -53,7 +53,7 @@
                                 <input type="hidden" name="idCandidatura" th:value="${candidatura.id}" />
                                 
                                 <a class="button-style" th:href="@{'/candidaturas/curriculo/' + ${candidatura.id}}" target="_blank" style="margin-right: 5px; background-color: #007bff;">Ver Currículo</a>
-                                <select name="status" class="status-select">
+                                <select name="status" class="status-select" onchange="toggleLinkEntrevista(this)">
                                     <option th:each="statusOption : ${statusOptions}" 
                                             th:value="${statusOption}" 
                                             th:text="${statusOption}"
@@ -77,6 +77,33 @@
             </div>
 
         </div>
+        <script th:inline="javascript">
+            function toggleLinkEntrevista(selectElement) {
+                const form = selectElement.closest('.status-form');
+                
+                const linkInput = form.querySelector('input[name="linkEntrevista"]');
+            
+                const statusSelecionado = selectElement.value;
+
+                if (statusSelecionado === 'ENTREVISTA') {
+                    linkInput.disabled = false;
+                    linkInput.placeholder = 'Cole o link da entrevista aqui';
+                    if (linkInput.value === 'ENVIADO') {
+                        linkInput.value = ''; 
+                    }
+                } else {
+                    linkInput.disabled = true; 
+                    linkInput.value = '';      
+                    linkInput.placeholder = 'Link da entrevista (se ENTREVISTA)';
+                }
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                const allSelects = document.querySelectorAll('.status-select');
+                allSelects.forEach(function(select) {
+                    toggleLinkEntrevista(select);
+                });
+            });
+        </script>
     </section>
 </body>
 </html>
