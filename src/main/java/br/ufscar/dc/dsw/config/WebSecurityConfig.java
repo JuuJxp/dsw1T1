@@ -33,14 +33,10 @@ public class WebSecurityConfig {
     http
       .authorizeHttpRequests(auth -> auth
           .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
-          // por enquanto deixar sem precisar logar essas rotas (depois precisa de login como admin)
-          .requestMatchers("/", "/error", "/login/**", "/usuarios/novo", "/profissionais/cadastrar", "/empresas/cadastrar").permitAll()
-          .requestMatchers("/profissionais/salvar", "/empresas/salvar").permitAll()
-          .requestMatchers("/vagas/listar**").permitAll()
+          .requestMatchers("/vagas/listar**", "/", "/error", "/login/**").permitAll()
+          .requestMatchers("/perfilAdministrador", "/profissionais/cadastrar", "/empresas/cadastrar", "/usuarios/novo", "/profissionais/salvar", "/profissionais/editar", "/empresas/salvar", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/excluir/**").hasRole("ADMIN")
 
-          .requestMatchers("/perfilAdministrador", "/profissionais/cadastrar", "/empresas/cadastrar", "/usuarios/novo", "/profissionais/salvar", "/empresas/salvar", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/excluir/**").hasRole("ADMIN")
-
-          .requestMatchers("/vagas/cadastrar", "/vagas/salvar", "/vagas/minhasVagas", "/vagas/editar/**", "/vagas/excluir/**", "/perfilEmpresa").hasRole("EMPRESA")
+          .requestMatchers("/vagas/cadastrar", "/vagas/salvar", "/vagas/minhasVagas", "/vagas/excluir/**", "/perfilEmpresa").hasRole("EMPRESA")
           .requestMatchers("/candidaturas/gerenciar/**", "/candidaturas/atualizarStatus").hasRole("EMPRESA")
 
           .requestMatchers("/candidaturas/candidatar/**", "/perfilProfissional","/candidaturas/minhasCandidaturas", "/candidaturas/salvar/**").hasRole("PROFISSIONAL")
