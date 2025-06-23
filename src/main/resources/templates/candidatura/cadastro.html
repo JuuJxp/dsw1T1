@@ -9,7 +9,7 @@
         <div class="container center">
             <h1 class="title-text" style="font-size: 2em;">Candidatura</h1>
             <h1 class="title-text" style="font-size: 1.5em; color:black">Detalhes da vaga</h1>
-            <div class="job-card">
+            <div class="job-card" style="width: 40%;">
                 <div class="job-card-header">
                         <h2 th:text="${vaga.titulo}">Título da vaga</h2>
                         <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/YYYY')}">xx/xx/xxxx</span>
@@ -19,9 +19,6 @@
                     </div>
                     <div class="job-details company-info">
                         <span th:text="${vaga.empresa.nome}">Empresa ABC</span>
-                        <a th:href="@{'/empresas/' + ${vaga.empresa.id} + '/vagas'}">
-                                + <span>x</span> anúncios dessa empresa!
-                        </a>
                     </div>
                     <span th:text="${vaga.descricao}">descrição blablabla...</span>
                     <div class="job-footer">

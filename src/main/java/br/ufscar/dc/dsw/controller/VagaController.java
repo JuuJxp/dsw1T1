@@ -1,7 +1,9 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +40,18 @@ public class VagaController {
         } else {
             vagas = vagaService.buscarTodasVagasEmAberto();
         }
+
+        Map<Long, Long> empresaVagasCountMap = new HashMap<>();
+        for (Vaga vaga : vagas) {
+        Long empresaId = vaga.getEmpresa().getId();
+        if (!empresaVagasCountMap.containsKey(empresaId)) {
+            long count = vagaService.contarVagasAtivasPorEmpresa(vaga.getEmpresa());
+            empresaVagasCountMap.put(empresaId, count);
+        }
+    }
+
         model.addAttribute("vagas", vagas);
+        model.addAttribute("empresaVagasCountMap", empresaVagasCountMap);
         return "vaga/lista"; 
     }
 

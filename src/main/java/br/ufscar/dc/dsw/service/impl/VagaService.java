@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.service.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,6 +28,17 @@ public class VagaService implements IVagaService {
         dao.deleteById(id);
     }
 
+    @Transactional
+    public void desativarVagasExpiradas() {
+        Date hoje = Date.valueOf(LocalDate.now());
+        List<Vaga> vagasExpiradasAtivas = dao.findByAtivaTrueAndDataLimiteInscricaoBefore(hoje);
+
+        for (Vaga vaga : vagasExpiradasAtivas) {
+            vaga.setAtiva(false);
+            dao.save(vaga);
+        }
+        System.out.println("Desativadas " + vagasExpiradasAtivas.size() + " vagas expiradas.");
+    }
     @Transactional(readOnly = true)
     public Vaga buscarPorId(Long id) {
         return dao.findById(id.longValue());
@@ -34,6 +46,7 @@ public class VagaService implements IVagaService {
 
     @Transactional(readOnly = true)
     public List<Vaga> buscarTodos() {
+        desativarVagasExpiradas(); // Desativa vagas expiradas antes de buscar todas
         return dao.findAll();
     }
 
@@ -44,11 +57,19 @@ public class VagaService implements IVagaService {
 
     @Transactional(readOnly = true)
     public List<Vaga> buscarTodasVagasEmAberto() {
-        return dao.findByDataLimiteInscricaoAfter(LocalDate.now());
+        desativarVagasExpiradas(); // Desativa vagas expiradas antes de buscar vagas em aberto
+        return dao.findByDataLimiteInscricaoAfter(Date.valueOf(LocalDate.now()));
     }
 
     @Transactional(readOnly = true)
     public List<Vaga> buscarVagasEmAbertoPorCidade(String cidade) {
-        return dao.findByDataLimiteInscricaoAfterAndEmpresaCidade(LocalDate.now(), cidade);
+        desativarVagasExpiradas();
+        return dao.findByDataLimiteInscricaoAfterAndEmpresaCidade(Date.valueOf(LocalDate.now()), cidade);
+    }
+    
+    @Transactional(readOnly = true)
+    public long contarVagasAtivasPorEmpresa(Empresa empresa) {
+        desativarVagasExpiradas();
+        return dao.countByEmpresaAndAtivaTrue(empresa);
     }
 }

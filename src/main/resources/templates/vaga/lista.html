@@ -24,7 +24,7 @@
                 <div class="job-details company-info">
                     <span th:text="${vaga.empresa.nome}">Empresa ABC</span>
                     <a th:href="@{'/empresas/' + ${vaga.empresa.id} + '/vagas'}">
-                            + <span>x</span> anúncios dessa empresa!
+                            + <span th:text="${empresaVagasCountMap.get(vaga.empresa.id)}">x</span> anúncios dessa empresa!
                     </a>
                 </div>
                 <span th:text="${vaga.descricao}">descrição blablabla...</span>
