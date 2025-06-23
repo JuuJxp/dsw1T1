@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Cadastro de Empresa</title>
+</head>
+<body>
+  <section class="layout-content" layout:fragment="corpo">
+      <div class="container center">
+          <h1 class="title-text" style="font-size: 2em;">Cadastro de Empresa</h1>
+          <div th:replace="fragments/alert"></div>
+
+          <form th:action="${empresa.id == null} ? @{/empresas/salvar} : @{/empresas/editar}"
+                th:object="${empresa}" method="POST" style="width: 40%;">
+              
+              <input type="hidden" id="id" th:field="*{id}" />
+              <input type="hidden" th:field="*{papel}" /> 
+
+              <div class="item-form">
+                  <label for="email">E-mail</label>
+                  <input type="email" class="form-control" id="email" placeholder="E-mail"
+                      autofocus="autofocus" th:field="*{email}"
+                      th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
+                  <div class="invalid-feedback">
+                      <span th:errors="*{email}"></span>
+                  </div>
+              </div>
+
+              <div class="item-form">
+                  <label for="senha">Senha</label>
+                  <input type="password" class="form-control" id="senha" placeholder="Senha"
+                      th:field="*{senha}"
+                      th:classappend="${#fields.hasErrors('senha')} ? is-invalid" />
+                  <div class="invalid-feedback">
+                      <span th:errors="*{senha}"></span>
+                  </div>
+              </div>
+              
+              <div class="item-form">
+                  <label for="cnpj">CNPJ</label>
+                  <input type="text" class="form-control" id="cnpj" placeholder="CNPJ"
+                      data-mask="00.000.000/0000-00" data-mask-reverse="true" th:field="*{cnpj}"
+                      th:classappend="${#fields.hasErrors('cnpj')} ? is-invalid" />
+                  <div class="invalid-feedback">
+                      <span th:errors="*{cnpj}"></span>
+                  </div>
+              </div>
+
+              <div class="item-form">
+                  <label for="nome">Nome da Empresa</label>
+                  <input type="text" class="form-control" id="nome" placeholder="Nome da Empresa"
+                      th:field="*{nome}"
+                      th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
+                  <div class="invalid-feedback">
+                      <span th:errors="*{nome}"></span>
+                  </div>
+              </div>
+
+              <div class="item-form">
+                  <label for="descricao">Descrição</label>
+                  <textarea class="form-control" id="descricao" rows="3" placeholder="Descrição da Empresa"
+                      th:field="*{descricao}"
+                      th:classappend="${#fields.hasErrors('descricao')} ? is-invalid"></textarea>
+                  <div class="invalid-feedback">
+                      <span th:errors="*{descricao}"></span>
+                  </div>
+              </div>
+
+              <div class="item-form">
+                  <label for="cidade">Cidade</label>
+                  <input type="text" class="form-control" id="cidade" placeholder="Cidade"
+                      th:field="*{cidade}"
+                      th:classappend="${#fields.hasErrors('cidade')} ? is-invalid" />
+                  <div class="invalid-feedback">
+                      <span th:errors="*{cidade}"></span>
+                  </div>
+              </div>
+
+              <div class="item-form">
+                  <label for="estado">Estado</label>
+                  <input type="text" class="form-control" id="estado" placeholder="Estado"
+                      th:field="*{estado}"
+                      th:classappend="${#fields.hasErrors('estado')} ? is-invalid" />
+                  <div class="invalid-feedback">
+                      <span th:errors="*{estado}"></span>
+                  </div>
+              </div>
+
+              <div class="item-form">
+                  <label for="pais">País</label>
+                  <input type="text" class="form-control" id="pais" placeholder="País"
+                      th:field="*{pais}"
+                      th:classappend="${#fields.hasErrors('pais')} ? is-invalid" />
+                  <div class="invalid-feedback">
+                      <span th:errors="*{pais}"></span>
+                  </div>
+              </div>
+
+              <div class="center" style="flex-direction: row;">
+                  <button style="margin-inline: 10px;" type="submit" class="button-style">Salvar</button>
+                  <a style="margin-inline: 10px;" th:href="@{/empresas/listar}" class="button-style inactive">Cancelar</a>
+              </div>
+          </form>
+      </div>
+  </section>
+</body>
+</html>
