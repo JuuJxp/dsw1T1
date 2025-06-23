@@ -88,27 +88,14 @@ public class VagaController {
         return "vaga/minhasVagas"; 
     }
 
-    @GetMapping("/editar/{id}")
-    public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-        Vaga vaga = vagaService.buscarPorId(id);
-        model.addAttribute("vaga", vaga);
-        return "vaga/cadastro";
-    }
-
-    @PostMapping("/editar")
-    public String editar(@Valid Vaga vaga, BindingResult result, RedirectAttributes attr) {
-        if (result.hasErrors()) {
-            return "vaga/cadastro";
-        }
-        vagaService.salvar(vaga);
-        attr.addFlashAttribute("sucess", "Vaga editada com sucesso!");
-        return "redirect:/vagas/minhasVagas";
-    }
-
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
-        vagaService.excluir(id);
-        attr.addFlashAttribute("sucess", "Vaga excluída com sucesso!");
+        try{
+            vagaService.excluir(id);
+            attr.addFlashAttribute("sucess", "Vaga excluída com sucesso!");
+        } catch (Exception e) {
+            return "redirect:/erro?msg=Não foi possível excluir a vaga. Verifique se ela possui candidaturas ativas.";
+        }
         return "redirect:/vagas/minhasVagas";
     }
 }
