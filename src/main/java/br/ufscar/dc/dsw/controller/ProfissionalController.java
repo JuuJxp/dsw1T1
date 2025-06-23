@@ -8,14 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.SexoProfissional;
-import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
-import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -24,20 +21,9 @@ public class ProfissionalController {
 
     @Autowired
     private IProfissionalService profissionalService;
-
-    @Autowired
-    private IUsuarioService usuarioService;
      
     @GetMapping("/cadastrar")
-    public String cadastrar(Profissional profissional, @RequestParam(value = "idUsuario", required = false) Long idUsuario, ModelMap model) {
-            Usuario usuario = usuarioService.buscarPorId(idUsuario);
-            if (usuario != null) {
-                profissional.setId(usuario.getId());
-                profissional.setEmail(usuario.getEmail());
-                profissional.setSenha(usuario.getSenha());
-                profissional.setPapel(usuario.getPapel());
-                profissional.setAtivo(usuario.isAtivo());
-            }
+    public String cadastrar(Profissional profissional, ModelMap model) {
         model.addAttribute("sexos", SexoProfissional.values());
         return "profissional/cadastro";
     }
