@@ -27,9 +27,14 @@
 
                 <div class="center" style="flex-direction: row;">
                     <button style="margin: 15px; width: 40%;" type="submit" class="button-style" th:text="#{entrar.label}">Entrar</button>
-                    <a style="margin: 10px; width: 40%;" th:href="@{/usuarios/novo}" class="button-style inactive" th:text="#{criarConta.label}">Criar conta</a>
                 </div>
             </form>
+            <div style="text-align: center; width: 45%;">
+                <p style="font-size: 0.9em; color: #ae0606;" th:utext="#{warning.label}">
+                    Para cadastrar novas Empresas ou Profissionais, <br>
+                    é necessário acessar com um perfil de *Administrador*.
+                </p>
+            </div>
         </div>
 	</section>
 </body>

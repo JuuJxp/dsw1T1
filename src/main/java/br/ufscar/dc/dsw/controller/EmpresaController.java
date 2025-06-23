@@ -74,10 +74,10 @@ public class EmpresaController {
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable("id") Long id, ModelMap model) {
+    public String excluir(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
         try{
             service.excluir(id);
-            model.addAttribute("sucess", "Empresa excluída com sucesso.");
+            attr.addFlashAttribute("sucess", "Empresa excluída com sucesso.");
         } catch (Exception e) {
             return "redirect:/erro?msg=Não foi possível excluir a empresa. Verifique se ela possui vagas ativas.";
         }

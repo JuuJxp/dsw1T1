@@ -211,9 +211,6 @@ body {
     color: #550066;
     text-decoration: none;
 }
-.company-info a:hover {
-    text-decoration: underline;
-}
 
 .bold {
     font-weight: bold;
