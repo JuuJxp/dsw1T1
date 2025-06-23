@@ -32,22 +32,22 @@ public class WebSecurityConfig {
       .authorizeHttpRequests(auth -> auth
           .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
           // por enquanto deixar sem precisar logar essas rotas (depois precisa de login como admin)
-          .requestMatchers("/", "/home", "/error", "/login/**", "/usuarios/novo", "/profissionais/cadastrar", "/empresas/cadastrar").permitAll()
-          .requestMatchers("/profissionais/salvar", "/empresas/salvar").permitAll() // Permite POST para salvar novos cadastros
+          .requestMatchers("/", "/error", "/login/**", "/usuarios/novo", "/profissionais/cadastrar", "/empresas/cadastrar").permitAll()
+          .requestMatchers("/profissionais/salvar", "/empresas/salvar").permitAll()
           .requestMatchers("/vagas/listar**").permitAll()
 
-          .requestMatchers("/administradores/**", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/editar/**", "/profissionais/excluir/**").hasRole("ADMIN")
+          .requestMatchers("/perfilAdministrador", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/editar/**", "/profissionais/excluir/**").hasRole("ADMIN")
 
           .requestMatchers("/vagas/cadastrar", "/vagas/salvar", "/vagas/minhasVagas", "/vagas/editar/**", "/vagas/excluir/**").hasRole("EMPRESA")
           .requestMatchers("/candidaturas/gerenciar/**", "/candidaturas/atualizarStatus").hasRole("EMPRESA")
 
-          .requestMatchers("/candidaturas/candidatar/**", "/candidaturas/minhasCandidaturas").hasRole("PROFISSIONAL")
+          .requestMatchers("/candidaturas/candidatar/**", "/candidaturas/minhasCandidaturas", "/candidaturas/salvar/**").hasRole("PROFISSIONAL")
 
           .anyRequest().authenticated()
         )
         .formLogin(form -> form
           .loginPage("/login") 
-          .defaultSuccessUrl("/", true)
+          .defaultSuccessUrl("/perfilAdministrador", true)
           .failureUrl("/login?error=true") 
           .permitAll()
         )
