@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Minhas Candidaturas</title>
+</head>
+<body>
+    <section class="layout-content" layout:fragment="corpo">
+        <div class="container center">
+            <div class="alert-container" th:replace="fragments/alert"></div>
+            <h1 class="title-text" style="font-size: 2em;">Minhas Candidaturas</h1>
+            <img src="/image/candidatura.png" width="150px" style="margin-top: -20px" alt="Candidatura Icon" />
+            
+            <table class="table-lista">
+                <thead>
+                    <tr>
+                        <th>Vaga</th>
+                        <th>Empresa</th>
+                        <th>Cidade da Vaga</th>
+                        <th>Remuneração</th>
+                        <th>Data Candidatura</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="candidatura : ${candidaturas}">
+                        <td th:text="${candidatura.vaga.titulo}"></td>
+                        <td th:text="${candidatura.vaga.empresa.nome}"></td>
+                        <td th:text="${candidatura.vaga.cidade}"></td>
+                        <td th:text="${#numbers.formatCurrency(candidatura.vaga.remuneracao)}"></td>
+                        <td th:text="${#dates.format(candidatura.dataCandidatura, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td>
+                            <span th:classappend="'status-' + ${candidatura.statusVaga.name()}" th:text="${candidatura.statusVaga}">Status</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(candidaturas)}">
+                        <td colspan="7" style="text-align: center; color: #777;">Você ainda não se candidatou a nenhuma vaga.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="center" style="margin-block: 20px;">
+                <a class="button-style" th:href="@{/vagas/listar}" role="button">Buscar Novas Vagas</a>
+            </div>
+
+        </div>
+    </section>
+</body>
+</html>
