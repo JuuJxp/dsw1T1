@@ -45,14 +45,14 @@ A aplicação utiliza um banco de dados em memória que é criado e populado na 
 1.  **Acesso de Administrador:** Autentique-se com o usuário administrador. Utilize o painel para criar um novo usuário do tipo **Empresa** e outro do tipo **Profissional**. As funcionalidades de edição e exclusão de usuários podem ser testadas nesta etapa. Encerre a sessão.
 2.  **Acesso de Empresa:** Autentique-se com o usuário da empresa recém-criada. Acesse a área de vagas e crie uma nova **Vaga**. Encerre a sessão.
 3.  **Acesso de Profissional:** Autentique-se com o usuário do profissional. Localize a vaga criada anteriormente e realize a **candidatura**. Encerre a sessão.
-4.  **Verificação da Empresa:** Retorne ao sistema com o usuário da empresa. Verifique a vaga publicada para visualizar a lista de candidaturas. O sistema deve permitir a análise do perfil e o **download do currículo** do candidato, bem como a **alteração de status** da candidatura.
+4.  **Verificação da Empresa:** Retorne ao sistema com o usuário da empresa. Verifique a vaga publicada para visualizar a lista de candidaturas. O sistema deve permitir a análise do perfil e o **download do currículo** do candidato, bem como a **alteração de status** da candidatura se a vaga já estiver no período de análise (após expirar sua data de inscrição).
 5.  **Verificação de Notificação:** Confirme se um **e-mail de notificação** sobre a alteração de status foi enviado ao endereço de e-mail associado ao usuário profissional.
 
 ## Protótipo de Interface
 
 O desenvolvimento das telas foi guiado pelo protótipo que criamos no Excalidraw para termos uma ideia de como iriamos querer
 
-`![Protótipo das Telas](image/prototipo.png)`
+`![Protótipo das Telas](src/main/resources//static/image/prototipo.png)`
 
 ## Desenvolvedoras
 
