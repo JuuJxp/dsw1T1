@@ -30,7 +30,7 @@
                 <span th:text="${vaga.descricao}">descrição blablabla...</span>
                 <div class="job-footer">
                     <span class="company-info" th:text="${vaga.cidade} + ' - ' + ${vaga.estado}">cidade - XX</span>
-                    <a th:href="@{/candidatar/{id}(id=${vaga.id})}" class="button-style">Candidatar-se</a>
+                    <a th:href="@{/candidaturas/candidatar/{idVaga}(idVaga=${vaga.id})}" class="button-style">Candidatar-se</a>
                 </div>
             </div>
 
