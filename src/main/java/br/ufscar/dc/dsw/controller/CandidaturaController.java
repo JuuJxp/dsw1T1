@@ -39,7 +39,42 @@ public class CandidaturaController {
     @Autowired
     private IEmpresaService empresaService;
 
-    @PostMapping("/candidatar/{idVaga}")
+    // Exibir formulário de candidatura para uma vaga específica
+    @GetMapping("/candidatar/{idVaga}")
+    public String exibirFormularioCandidatura(@PathVariable("idVaga") Long idVaga, ModelMap model, Principal principal, RedirectAttributes attr) {
+        // Encontra a vaga pelo ID
+        Vaga vaga = vagaService.buscarPorId(idVaga);
+        
+        // Verifica se a vaga existe
+        if (vaga == null) {
+            attr.addFlashAttribute("fail", "Vaga não encontrada.");
+            return "redirect:/vagas/listar";
+        }
+        // Verifica se o usuário está logado
+        if (principal == null) {
+            attr.addFlashAttribute("fail", "Você precisa estar logado para se candidatar.");
+            return "redirect:/login"; 
+        }
+        // Tenta buscar o profissional pelo email do usuário autenticado
+        // Se o usuário não for um profissional ou nao estiver logado, redireciona com mensagem de erro
+        Profissional profissional = profissionalService.buscarPorEmail(principal.getName());
+        if (profissional == null) {
+            attr.addFlashAttribute("fail", "Você precisa ser um profissional para se candidatar.");
+            return "redirect:/login"; 
+        }
+
+        // Verifica se o profissional já se candidatou a esta vaga
+        if (candidaturaService.jaCandidatou(profissional, vaga)) {
+            attr.addFlashAttribute("fail", "Você já se candidatou a esta vaga.");
+            return "redirect:/vagas/listar"; 
+        }
+
+        model.addAttribute("vaga", vaga);
+        
+        return "candidatura/cadastro";
+    }
+
+    @PostMapping("/candidatura/salvar/{idVaga}")
     public String candidatar(@PathVariable("idVaga") Long idVaga,
                              @RequestParam("file") MultipartFile file,
                              RedirectAttributes attr, Principal principal) {
@@ -49,11 +84,6 @@ public class CandidaturaController {
 
         if (profissional == null || vaga == null) {
             attr.addFlashAttribute("fail", "Profissional ou Vaga não encontrados.");
-            return "redirect:/vagas/listar";
-        }
-
-        if (candidaturaService.jaCandidatou(profissional, vaga)) {
-            attr.addFlashAttribute("fail", "Você já se candidatou a esta vaga.");
             return "redirect:/vagas/listar";
         }
 
