@@ -35,4 +35,8 @@ public class HomeController {
     public String acessoNegado(RedirectAttributes attr) {
         return "acessoNegado";
     }
+	@GetMapping("/erro")
+	public String paginaDeErro() {
+			return "erro";
+	}
 }

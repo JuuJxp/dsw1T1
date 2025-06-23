@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw.domain;
 import java.time.LocalDate;
 import java.util.List;
 
+import br.ufscar.dc.dsw.validation.UniqueCPF;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,6 +27,7 @@ public class Profissional extends Usuario {
     @Column(nullable = false, length = 255)
     private String nome;
 
+    @UniqueCPF(message = "{Unique.profissional.cpf}")
     @NotBlank(message = "{NotBlank.profissional.cpf}")
     @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}", message = "{Pattern.profissional.cpf}")
     @Column(nullable = false, length = 14, unique = true)
