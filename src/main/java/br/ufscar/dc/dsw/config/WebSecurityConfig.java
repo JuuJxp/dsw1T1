@@ -15,6 +15,9 @@ import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+  @Autowired
+  private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -38,16 +41,16 @@ public class WebSecurityConfig {
 
           .requestMatchers("/perfilAdministrador", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/editar/**", "/profissionais/excluir/**").hasRole("ADMIN")
 
-          .requestMatchers("/vagas/cadastrar", "/vagas/salvar", "/vagas/minhasVagas", "/vagas/editar/**", "/vagas/excluir/**").hasRole("EMPRESA")
+          .requestMatchers("/vagas/cadastrar", "/vagas/salvar", "/vagas/minhasVagas", "/vagas/editar/**", "/vagas/excluir/**", "/perfilEmpresa").hasRole("EMPRESA")
           .requestMatchers("/candidaturas/gerenciar/**", "/candidaturas/atualizarStatus").hasRole("EMPRESA")
 
-          .requestMatchers("/candidaturas/candidatar/**", "/candidaturas/minhasCandidaturas", "/candidaturas/salvar/**").hasRole("PROFISSIONAL")
+          .requestMatchers("/candidaturas/candidatar/**", "/perfilProfissional","/candidaturas/minhasCandidaturas", "/candidaturas/salvar/**").hasRole("PROFISSIONAL")
 
           .anyRequest().authenticated()
         )
         .formLogin(form -> form
           .loginPage("/login") 
-          .defaultSuccessUrl("/perfilAdministrador", true)
+          .successHandler(customAuthenticationSuccessHandler)
           .failureUrl("/login?error=true") 
           .permitAll()
         )
