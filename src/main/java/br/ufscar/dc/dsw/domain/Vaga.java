@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.domain;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Vaga extends AbstractEntity<Long> {
 
     @PositiveOrZero(message = "{PositiveOrZero.vaga.remuneracao}")
     @Column(nullable = true, precision = 10, scale = 2)
-    private Double remuneracao;
+    private BigDecimal remuneracao;
 
     @NotNull(message = "{NotNull.vaga.dataLimiteInscricao}")
     @FutureOrPresent(message = "{FutureOrPresent.vaga.dataLimiteInscricao}")
@@ -78,11 +79,11 @@ public class Vaga extends AbstractEntity<Long> {
         return criadoEm;
     }
 
-    public Double getRemuneracao() {
+    public BigDecimal getRemuneracao() {
         return remuneracao;
     }
 
-    public void setRemuneracao(Double remuneracao) {
+    public void setRemuneracao(BigDecimal remuneracao) {
         this.remuneracao = remuneracao;
     }
 
