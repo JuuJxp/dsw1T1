@@ -35,11 +35,9 @@ public class WebSecurityConfig {
       .authorizeHttpRequests(auth -> auth
           .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
           // por enquanto deixar sem precisar logar essas rotas (depois precisa de login como admin)
-          .requestMatchers("/", "/error", "/login/**", "/usuarios/novo", "/profissionais/cadastrar", "/empresas/cadastrar", "/acessoNegado").permitAll()
-          .requestMatchers("/profissionais/salvar", "/empresas/salvar").permitAll()
-          .requestMatchers("/vagas/listar**").permitAll()
+          .requestMatchers("/", "/error", "/login/**", "/vagas/listar**").permitAll()
 
-          .requestMatchers("/perfilAdministrador", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/editar/**", "/profissionais/excluir/**").hasRole("ADMIN")
+          .requestMatchers("/perfilAdministrador", "/profissionais/cadastrar", "/empresas/cadastrar", "/usuarios/novo", "/profissionais/salvar", "/empresas/salvar", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/excluir/**").hasRole("ADMIN")
 
           .requestMatchers("/vagas/cadastrar", "/vagas/salvar", "/vagas/minhasVagas", "/vagas/editar/**", "/vagas/excluir/**", "/perfilEmpresa").hasRole("EMPRESA")
           .requestMatchers("/candidaturas/gerenciar/**", "/candidaturas/atualizarStatus").hasRole("EMPRESA")
