@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
 
 <title>Betwin Vagas</title>
 <meta charset="UTF-8" />
@@ -23,7 +24,7 @@
 </head>
 <body>
 
-	<header th:replace="fragments/header :: cabecalho">
+	<header th:replace="~{fragments/header :: cabecalho}">
 		<div>header</div>
 	</header>
 
@@ -33,7 +34,7 @@
 		</section>
 	</div>
 
-	<footer th:replace="fragments/footer :: rodape">
+	<footer th:replace="~{fragments/footer :: rodape}">
 		<div>footer</div>
 	</footer>
 	
