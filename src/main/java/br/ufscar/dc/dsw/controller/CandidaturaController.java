@@ -75,9 +75,7 @@ public class CandidaturaController {
     }
 
     @PostMapping("/salvar/{idVaga}")
-    public String candidatar(@PathVariable("idVaga") Long idVaga,
-                             @RequestParam("file") MultipartFile file,
-                             RedirectAttributes attr, Principal principal) {
+    public String candidatar(@PathVariable("idVaga") Long idVaga, @RequestParam("file") MultipartFile file, RedirectAttributes attr, Principal principal) {
         
         Profissional profissional = profissionalService.buscarPorEmail(principal.getName());
         Vaga vaga = vagaService.buscarPorId(idVaga);
@@ -111,8 +109,8 @@ public class CandidaturaController {
         Vaga vaga = vagaService.buscarPorId(idVaga);
 
         if (vaga == null || !vaga.getEmpresa().getId().equals(empresa.getId())) {
-             model.addAttribute("fail", "Acesso não autorizado ou vaga não encontrada.");
-             return "redirect:/vagas/minhasVagas";
+            model.addAttribute("fail", "Acesso não autorizado ou vaga não encontrada.");
+            return "redirect:/vagas/minhasVagas";
         }
 
         model.addAttribute("vaga", vaga);
@@ -123,9 +121,9 @@ public class CandidaturaController {
 
     @PostMapping("/atualizarStatus")
     public String atualizarStatus(@RequestParam("idCandidatura") Long idCandidatura,
-                                  @RequestParam("status") StatusCandidatura status,
-                                  @RequestParam(value = "linkEntrevista", required = false) String linkEntrevista,
-                                  RedirectAttributes attr, Principal principal) {
+    @RequestParam("status") StatusCandidatura status,
+    @RequestParam(value = "linkEntrevista", required = false) String linkEntrevista,
+    RedirectAttributes attr, Principal principal) {
         Candidatura candidatura = candidaturaService.buscarPorId(idCandidatura);
 
         Empresa empresa = empresaService.buscarPorEmail(principal.getName());
