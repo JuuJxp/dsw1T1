@@ -74,7 +74,7 @@ public class CandidaturaController {
         return "candidatura/cadastro";
     }
 
-    @PostMapping("/candidatura/salvar/{idVaga}")
+    @PostMapping("/salvar/{idVaga}")
     public String candidatar(@PathVariable("idVaga") Long idVaga,
                              @RequestParam("file") MultipartFile file,
                              RedirectAttributes attr, Principal principal) {
