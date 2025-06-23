@@ -2,20 +2,20 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Perfil da Empresa</title>
+    <title th:text="#{perfilEmpresaTitulo.label}">Perfil da Empresa</title>
 </head>
 <body>
         <div class="profile-container" layout:fragment="corpo">
 
-            <div class="title-text">
+            <div class="title-text" th:utext="#{perfilAdminBoasVindas.label}">
                 <br>Bem vindo de volta!
                 <br>o que deseja?
             </div>
 
             <div class="button-group">
-                <a class="button-style" th:href="@{/vagas/minhasVagas}">Ver minhas vagas</a>
+                <a class="button-style" th:href="@{/vagas/minhasVagas}" th:text="#{verMinhasVagas.label}">Ver minhas vagas</a>
                 
-                <a class="button-style" th:href="@{/vagas/cadastrar}">Adicionar nova vaga</a>
+                <a class="button-style" th:href="@{/vagas/cadastrar}" th:text="#{adicionarNovaVaga.label}">Adicionar nova vaga</a>
             </div>
         </div>
 

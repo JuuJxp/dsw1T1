@@ -2,79 +2,70 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Cadastro de Vaga</title>
+    <title th:text="#{cadastroVagaTitulo.label}">Cadastro de Vaga</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
-            <h1 class="title-text" style="font-size: 2em;">Cadastro de Vaga</h1>
-            <!-- Fragmento para exibir alertas de sucesso ou falha -->
+            <h1 class="title-text" style="font-size: 2em;" th:text="#{cadastroVagaTitulo.label}">Cadastro de Vaga</h1>
             <div th:replace="fragments/alert"></div>
             <form th:action="${vaga.id == null} ? @{/vagas/salvar} : @{/vagas/editar}"
                   th:object="${vaga}" method="POST" style="width: 40%;">
                 
-                <!-- Campo oculto para o ID, usado para diferenciar cadastro de edição -->
                 <input type="hidden" id="id" th:field="*{id}" />
 
-                <!-- titulo -->
                 <div class="item-form">
-                    <label for="titulo">Título</label> 
-                    <input type="text" class="form-control" id="titulo" placeholder="Ex: Desenvolvedor(a) Backend Jr."
+                    <label for="titulo" th:text="#{titulo.label}">Título</label> 
+                    <input type="text" class="form-control" id="titulo" th:placeholder="#{tituloVagaPlaceholder.label}"
                         th:field="*{titulo}" th:classappend="${#fields.hasErrors('titulo')} ? is-invalid" />
                     <div class="invalid-feedback"><span th:errors="*{titulo}"></span></div>
                 </div>
 
-                <!-- descricao -->
                 <div class="item-form">
-                    <label for="descricao">Descrição</label> 
-                    <textarea class="form-control" id="descricao" rows="5" placeholder="Descreva o perfil profissional, responsabilidades e habilidades desejadas"
+                    <label for="descricao" th:text="#{descricao.label}">Descrição</label> 
+                    <textarea class="form-control" id="descricao" rows="5" th:placeholder="#{descricaoVagaPlaceholder.label}"
                         th:field="*{descricao}" th:classappend="${#fields.hasErrors('descricao')} ? is-invalid"></textarea>
                     <div class="invalid-feedback"><span th:errors="*{descricao}"></span></div>
                 </div>
 
-                <!-- remuneracao -->
                 <div class="item-form">
-                    <label for="remuneracao">Remuneração (R$)</label> 
-                    <input type="text" class="form-control" id="remuneracao" placeholder="Ex: 3500.00"
+                    <label for="remuneracao" th:text="#{remuneracao.label}">Remuneração (R$)</label> 
+                    <input type="text" class="form-control" id="remuneracao" th:placeholder="#{remuneracaoPlaceholder.label}"
                         th:field="*{remuneracao}" th:classappend="${#fields.hasErrors('remuneracao')} ? is-invalid" />
                     <div class="invalid-feedback"><span th:errors="*{remuneracao}"></span></div>
                 </div>
 
-                <!-- data limite -->
                 <div class="item-form">
-                    <label for="dataLimiteInscricao">Data limite de inscrição</label> 
+                    <label for="dataLimiteInscricao" th:text="#{dataLimiteInscricao.label}">Data limite de inscrição</label> 
                     <input type="date" class="form-control" id="dataLimiteInscricao"
                         th:field="*{dataLimiteInscricao}" th:classappend="${#fields.hasErrors('dataLimiteInscricao')} ? is-invalid" />
                     <div class="invalid-feedback"><span th:errors="*{dataLimiteInscricao}"></span></div>
                 </div>
 
-                <!-- cidade -->
                 <div class="item-form">
-                    <label for="cidade">Cidade</label> 
-                    <input type="text" class="form-control" id="cidade" placeholder="Ex: São Paulo"
+                    <label for="cidade" th:text="#{cidade.label}">Cidade</label> 
+                    <input type="text" class="form-control" id="cidade" th:placeholder="#{cidadeVagaPlaceholder.label}"
                         th:field="*{cidade}" th:classappend="${#fields.hasErrors('cidade')} ? is-invalid" />
                     <div class="invalid-feedback"><span th:errors="*{cidade}"></span></div>
                 </div>
 
-                <!-- estado -->
                 <div class="item-form">
-                    <label for="estado">Estado</label> 
-                    <input type="text" class="form-control" id="estado" placeholder="Ex: SP"
+                    <label for="estado" th:text="#{estado.label}">Estado</label> 
+                    <input type="text" class="form-control" id="estado" th:placeholder="#{estadoVagaPlaceholder.label}"
                         th:field="*{estado}" th:classappend="${#fields.hasErrors('estado')} ? is-invalid" />
                     <div class="invalid-feedback"><span th:errors="*{estado}"></span></div>
                 </div>
 
-                <!-- pais -->
                 <div class="item-form">
-                    <label for="pais">País</label> 
-                    <input type="text" class="form-control" id="pais" placeholder="Ex: Brasil"
+                    <label for="pais" th:text="#{pais.label}">País</label> 
+                    <input type="text" class="form-control" id="pais" th:placeholder="#{paisVagaPlaceholder.label}"
                         th:field="*{pais}" th:classappend="${#fields.hasErrors('pais')} ? is-invalid" />
                     <div class="invalid-feedback"><span th:errors="*{pais}"></span></div>
                 </div>
 
                 <div class="center" style="flex-direction: row;">
-                    <button style="margin-inline: 10px;" type="submit" class="button-style">Cadastrar vaga</button>
-                    <a style="margin-inline: 10px;" th:href="@{/vagas/minhasVagas}" class="button-style inactive">Cancelar</a>
+                    <button style="margin-inline: 10px;" type="submit" class="button-style" th:text="#{cadastrarVaga.label}">Cadastrar vaga</button>
+                    <a style="margin-inline: 10px;" th:href="@{/vagas/minhasVagas}" class="button-style inactive" th:text="#{cancelar.label}">Cancelar</a>
                 </div>
             </form>
         </div>

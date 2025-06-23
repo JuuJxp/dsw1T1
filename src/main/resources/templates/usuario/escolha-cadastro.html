@@ -2,22 +2,22 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Escolha seu Cadastro</title>
+    <title th:text="#{escolhaCadastroTitulo.label}">Escolha seu Cadastro</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center" style="margin-top: 40px;"> 
-            <h1 class="title-text">Seja bem-vindo(a) ao BetwinVagas!</h2> 
-            <h1 class="title-text" style="font-size: 1.6em; color:black">Escolha o quê você gostaria de cadastrar:</h1>
+            <h1 class="title-text" th:text="#{bemVindo.label}">Seja bem-vindo(a) ao BetwinVagas!</h1> 
+            <h1 class="title-text" style="font-size: 1.6em; color:black"  th:text="#{escolhaTipoCadastro.label}">Escolha o quê você gostaria de cadastrar:</h1>
         
             <div class="role-selection-buttons" style="margin-top: 40px;">
                 <button class="button-style role-buttons" onclick="window.location.href='/profissionais/cadastrar'"> 
-                    <span style="margin-right: 8px;" class="oi oi-person"></span>
-                    Sou um profissional 
+                    <span style="margin-right: 8px;" class="oi oi-person" ></span>
+                    <span th:text="#{souProfissional.label}"> Sou um profissional </span>
                 </button>
                 <button class="button-style role-buttons" onclick="window.location.href='/empresas/cadastrar'"> 
                     <span style="margin-right: 8px;" class="oi oi-briefcase"></span> 
-                    Sou uma empresa 
+                    <span th:text="#{souEmpresa.label}">Sou uma empresa</span>
                 </button>
             </div>
         </div>

@@ -14,19 +14,19 @@
             <form th:action="@{/login}" method="POST" style="width: 40%;">
                 <!-- email -->
                 <div class="item-form">
-                    <label for="username">Email</label> 
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Ex: julia@profissional.com" required/>
+                    <label for="username" th:text="#{email.label}">Email</label> 
+                    <input type="text" class="form-control" id="username" name="username" th:placeholder="#{emailLoginPlaceholder.label}" required/>
                 </div>
 
                 <!-- senha -->
                 <div class="item-form">
-                    <label for="password">Senha</label> 
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Insira sua senha" required/>
+                    <label for="password" th:text="#{senha.label}">Senha</label> 
+                    <input type="password" class="form-control" id="password" name="password" th:placeholder="#{senhaLoginPlaceholder.label}" required/>
                 </div>
 
                 <div class="center" style="flex-direction: row;">
-                    <button style="margin: 15px; width: 30%;" type="submit" class="button-style">Entrar</button>
-                    <a style="margin: 10px; width: 30%;" th:href="@{/usuarios/novo}" class="button-style inactive">Criar conta</a>
+                    <button style="margin: 15px; width: 40%;" type="submit" class="button-style" th:text="#{entrar.label}">Entrar</button>
+                    <a style="margin: 10px; width: 40%;" th:href="@{/usuarios/novo}" class="button-style inactive" th:text="#{criarConta.label}">Criar conta</a>
                 </div>
             </form>
         </div>

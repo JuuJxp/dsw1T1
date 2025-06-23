@@ -2,12 +2,12 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Cadastro de Profissional</title>
+    <title th:text="#{cadastroProfissionalTitulo.label}">Cadastro de Profissional</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
-            <h1 class="title-text" style="font-size: 2em;">Cadastro de Profissional</h1>
+            <h1 class="title-text" style="font-size: 2em;" th:text="#{cadastroProfissionalTitulo.label}">Cadastro de Profissional</h1>
             <div th:replace="fragments/alert"></div>
 
             <form th:action="${profissional.id == null} ? @{/profissionais/salvar} : @{/profissionais/editar}"
@@ -17,8 +17,8 @@
                 <input type="hidden" th:field="*{papel}" />
 
                 <div class="item-form">
-                    <label for="email">E-mail</label>
-                    <input type="email" class="form-control" id="email" placeholder="E-mail"
+                    <label for="email" th:text="#{email.label}">E-mail</label>
+                    <input type="email" class="form-control" id="email" th:placeholder="#{email.label}"
                         autofocus="autofocus" th:field="*{email}"
                         th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -27,8 +27,8 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="senha">Senha</label>
-                    <input type="password" class="form-control" id="senha" placeholder="Senha"
+                    <label for="senha" th:text="#{senha.label}">Senha</label>
+                    <input type="password" class="form-control" id="senha" th:placeholder="#{senha.label}"
                         th:field="*{senha}"
                         th:classappend="${#fields.hasErrors('senha')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -37,8 +37,8 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="nome">Nome Completo</label>
-                    <input type="text" class="form-control" id="nome" placeholder="Nome Completo"
+                    <label for="nome" th:text="#{nomeCompleto.label}">Nome Completo</label>
+                    <input type="text" class="form-control" id="nome" th:placeholder="#{nomeCompleto.label}"
                         th:field="*{nome}"
                         th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -47,8 +47,8 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="cpf">CPF</label>
-                    <input type="text" class="form-control" id="cpf" placeholder="CPF"
+                    <label for="cpf" th:text="#{cpf.label}">CPF</label>
+                    <input type="text" class="form-control" id="cpf" th:placeholder="#{cpf.label}"
                         data-mask="000.000.000-00" data-mask-reverse="true" th:field="*{cpf}"
                         th:classappend="${#fields.hasErrors('cpf')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -57,8 +57,8 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="telefone">Telefone</label>
-                    <input type="text" class="form-control" id="telefone" placeholder="Telefone"
+                    <label for="telefone" th:text="#{telefone.label}">Telefone</label>
+                    <input type="text" class="form-control" id="telefone" th:placeholder="#{telefone.label}"
                         data-mask="(00) 00000-0000" th:field="*{telefone}"
                         th:classappend="${#fields.hasErrors('telefone')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -67,10 +67,10 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="sexo">Sexo</label>
+                    <label for="sexo" th:text="#{sexo.label}">Sexo</label>
                     <select id="sexo" class="form-control" th:field="*{sexo}"
                         th:classappend="${#fields.hasErrors('sexo')} ? is-invalid">
-                        <option value="">Selecione</option>
+                        <option value="" th:text="#{selecione.label}">Selecione</option>
                         <option th:each="enumSexo : ${sexos}" th:value="${enumSexo}" th:text="${enumSexo}"></option>
                     </select>
                     <div class="invalid-feedback">
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="dataNascimento">Data de Nascimento</label>
+                    <label for="dataNascimento" th:text="#{dataNascimento.label}">Data de Nascimento</label>
                     <input type="date" class="form-control" id="dataNascimento"
                         th:field="*{dataNascimento}"
                         th:classappend="${#fields.hasErrors('dataNascimento')} ? is-invalid" />
@@ -89,8 +89,8 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="cidade">Cidade</label>
-                    <input type="text" class="form-control" id="cidade" placeholder="Cidade"
+                    <label for="cidade" th:text="#{cidade.label}">Cidade</label>
+                    <input type="text" class="form-control" id="cidade" th:placeholder="#{cidade.label}"
                         th:field="*{cidade}"
                         th:classappend="${#fields.hasErrors('cidade')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -99,8 +99,8 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="estado">Estado</label>
-                    <input type="text" class="form-control" id="estado" placeholder="Estado"
+                    <label for="estado" th:text="#{estado.label}">Estado</label>
+                    <input type="text" class="form-control" id="estado" th:placeholder="#{estado.label}"
                         th:field="*{estado}"
                         th:classappend="${#fields.hasErrors('estado')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -109,8 +109,8 @@
                 </div>
 
                 <div class="item-form">
-                    <label for="pais">País</label>
-                    <input type="text" class="form-control" id="pais" placeholder="País"
+                    <label for="pais" th:text="#{pais.label}">País</label>
+                    <input type="text" class="form-control" id="pais" th:placeholder="#{pais.label}"
                         th:field="*{pais}"
                         th:classappend="${#fields.hasErrors('pais')} ? is-invalid" />
                     <div class="invalid-feedback">
@@ -119,8 +119,8 @@
                 </div>
 
                 <div class="center" style="flex-direction: row;">
-                    <button style="margin-inline: 10px; width: 40%;" type="submit" class="button-style">Salvar</button>
-                    <a style="margin-inline: 10px; width: 40%;" th:href="@{/profissionais/listar}" class="button-style inactive">Cancelar</a>
+                    <button style="margin-inline: 10px; width: 40%;" type="submit" class="button-style" th:text="#{salvar.label}">Salvar</button>
+                    <a style="margin-inline: 10px; width: 40%;" th:href="@{/profissionais/listar}" class="button-style inactive" th:text="#{cancelar.label}">Cancelar</a>
                 </div>
             </form>
         </div>
