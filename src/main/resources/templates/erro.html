@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <section class="layout-content" layout:fragment="corpo">
+        <div class="container center">
+
+            <h1 class="title-text" style="font-size: 2em;">Oops! Ocorreu um Problema.</h1>
+            
+            <img th:src="@{/image/error.ico}" alt="Erro" style="width:128px; margin-block: 20px;"/>
+            
+            <div class="alert-container" style="width: 50%;">
+                <div class="alert alert-danger" role="alert" style="text-align: center;">
+                    <p class="mb-0" th:if="${param.msg != null}" th:text="${param.msg}">
+                        Uma falha inesperada ocorreu. Por favor, tente novamente.
+                    </p>
+                </div>
+            </div>
+            
+            <a th:href="@{/}" class="button-style" style="margin-top: 20px; width: 30%;">Voltar para a Página Inicial</a>
+
+        </div>
+    </section>
+</body>
+</html>

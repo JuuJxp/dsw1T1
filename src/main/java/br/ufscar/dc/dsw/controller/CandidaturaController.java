@@ -48,25 +48,25 @@ public class CandidaturaController {
         // Verifica se a vaga existe
         if (vaga == null) {
             attr.addFlashAttribute("fail", "Vaga não encontrada.");
-            return "redirect:/vagas/listar";
+            return "redirect:/erro?msg=Vaga não encontrada.";
         }
         // Verifica se o usuário está logado
         if (principal == null) {
             attr.addFlashAttribute("fail", "Você precisa estar logado para se candidatar.");
-            return "redirect:/login"; 
+            return "redirect:/acessoNegado"; 
         }
         // Tenta buscar o profissional pelo email do usuário autenticado
         // Se o usuário não for um profissional ou nao estiver logado, redireciona com mensagem de erro
         Profissional profissional = profissionalService.buscarPorEmail(principal.getName());
         if (profissional == null) {
             attr.addFlashAttribute("fail", "Você precisa ser um profissional para se candidatar.");
-            return "redirect:/login"; 
+            return "redirect:/acessoNegado"; 
         }
 
         // Verifica se o profissional já se candidatou a esta vaga
         if (candidaturaService.jaCandidatou(profissional, vaga)) {
             attr.addFlashAttribute("fail", "Você já se candidatou a esta vaga.");
-            return "redirect:/vagas/listar"; 
+            return "redirect:/erro?msg=Você já se candidatou para essa vaga!"; 
         }
 
         model.addAttribute("vaga", vaga);
@@ -82,7 +82,7 @@ public class CandidaturaController {
 
         if (profissional == null || vaga == null) {
             attr.addFlashAttribute("fail", "Profissional ou Vaga não encontrados.");
-            return "redirect:/vagas/listar";
+            return "redirect:/erro?msg=Não encontramos essa vaga ou profissional";
         }
 
             Candidatura candidatura = new Candidatura();
@@ -109,8 +109,8 @@ public class CandidaturaController {
         Vaga vaga = vagaService.buscarPorId(idVaga);
 
         if (vaga == null || !vaga.getEmpresa().getId().equals(empresa.getId())) {
-            model.addAttribute("fail", "Acesso não autorizado ou vaga não encontrada.");
-            return "redirect:/vagas/minhasVagas";
+             model.addAttribute("fail", "Acesso não autorizado ou vaga não encontrada.");
+             return "redirect:/acessoNegado";
         }
 
         model.addAttribute("vaga", vaga);
