@@ -123,14 +123,17 @@ body {
     color: #550066; 
     border: #550066 1px solid; 
 }
+
 .inactive:hover {
     background-color: #f2e7f4; 
     color: #770099;
     text-decoration: none;
 }
+
 .role-buttons{
     width: 45%;
     margin-inline: 10px;
+    padding-block: 5%;
 }
 /* FIM PAGINA DE CADASTRO */
 
@@ -221,3 +224,60 @@ body {
     font-weight: bold;
 }
 /* FIM PAGINA CADASTRO VAGAS */
+
+/* PAGINA LISTAR USUARIOS */
+.table-lista { 
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fbf5fc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-lista thead {
+    background-color: #550066;
+    color: #FFFFFF;
+}
+
+.table-lista th, .table-lista td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-lista tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-lista tbody tr:hover {
+    background-color: #f2e7f4;
+}
+
+.table-action-buttons {
+    display: flex;
+    gap: 8px;
+}
+.table-action-buttons .button-style {
+    padding: 6px 12px;
+    font-size: 0.9em;
+    border-radius: 5px;
+}
+.edit {
+    background-color: #17a2b8;
+}
+.edit:hover {
+    background-color: #138496;
+}
+.delete {
+    background-color: #dc3545;
+}
+.delete:hover {
+    background-color: #c82333;
+}
+.alert-container {
+    max-width: 960px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+/* FIM PAGINA LISTAR USUARIOS */
