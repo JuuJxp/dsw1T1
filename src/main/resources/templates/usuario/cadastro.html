@@ -3,22 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <title>Cadastro de Usuário</title>
+    <!-- Icones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
-
-        <nav class="navbar navbar-expand-md bg-light">
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><i class="oi oi-caret-right"></i>
-                        <span>Cadastrar Usuários</span></li>
-                </ul>
-                <a class="btn btn-primary btn-md" th:href="@{/usuarios/listar}"
-                    role="button"> <span class="oi oi-spreadsheet" title="Listar"
-                    aria-hidden="true"></span> <span>Listar Usuários</span>
-                </a>
-            </div>
-        </nav>
 
         <div class="container" id="cadastro">
 
@@ -32,11 +22,28 @@
                 <!-- Campo oculto para o ID, usado para diferenciar cadastro de edição -->
                 <input type="hidden" id="id" th:field="*{id}" />
 
-                <div class="form-row">
-                    <div class="form-group col-md-6">
+                <div class="button-group" style="align-items: center;">
+                    <div class="role-selection-buttons">
+                        <button class="button-style role-buttons"> 
+                            <span style="margin-right: 8px;" class="oi oi-person"></span>
+                            Profissional 
+                        </button>
+                        <button class="button-style role-buttons"> 
+                            <span style="margin-right: 8px;" class="oi oi-briefcase"></span> 
+                            Empresa 
+                        </button>
+                    </div>
+                    <!-- FAZER DEMAIS CAMPOS ASSIM QUE OS DAOS ESTIVEREM PRONTOS <div style="width: 40%;">
+                        <label for="nome">Nome</label> 
+                        <input type="text" class="form-control" id="nome" placeholder="Insira o nome"
+                            th:field="*{nome}" th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
+                        <div class="invalid-feedback">
+                            <span th:errors="*{nome}"></span>
+                        </div>
+                    </div> -->
+                    <div style="width: 40%;">
                         <label for="email">Email</label> 
-                        <input type="email" class="form-control" id="email" placeholder="email@example.com"
-                            autofocus="autofocus" th:field="*{email}"
+                        <input type="email" class="form-control" id="email" placeholder="email@example.com" th:field="*{email}"
                             th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
 
                         <div class="invalid-feedback">
@@ -44,7 +51,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div style="width: 40%;">
                         <label for="senha">Senha</label> 
                         <input type="password" class="form-control" id="senha" placeholder="Digite sua senha"
                             th:field="*{senha}"
@@ -54,24 +61,9 @@
                             <span th:errors="*{senha}"></span>
                         </div>
                     </div>
+                    
+                    <button type="submit" class="button-style">Cadastrar</button>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="papel">Tipo de Usuário</label>
-                        <select class="form-control" id="papel" th:field="*{papel}"
-                                th:classappend="${#fields.hasErrors('papel')} ? is-invalid">
-                            <option value="">Selecione...</option>
-                            <option th:each="p : ${T(br.ufscar.dc.dsw.domain.PapelUsuario).values()}"
-                                    th:value="${p}" th:text="${p.name()}"></option>
-                        </select>
-                        <div class="invalid-feedback">
-                            <span th:errors="*{papel}"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-sm">Continuar</button>
             </form>
         </div>
     </section>
