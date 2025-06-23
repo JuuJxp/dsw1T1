@@ -2,35 +2,38 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Lista de Usuários</title>
+    <title>Lista de Profissionais</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
             <div class="alert-container" th:replace="fragments/alert"></div>
-            <h1 class="title-text" style="font-size: 2em;">Lista de Usuários</h1>
+            <h1 class="title-text" style="font-size: 2em;">Lista de Profissionais</h1>
+            <img  src="/image/profissional.png" width="150px" alt="Profissional Icon" />
             <table class="table-lista">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Email</th>
-                        <th>Papel</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}"></td>
-                        <td th:text="${usuario.email}"></td>
-                        <td th:text="${usuario.papel}"></td>
+                    <tr th:each="profissional : ${profissionais}">
+                        <td th:text="${profissional.id}"></td>
+                        <td th:text="${profissional.email}"></td>
+                        <td th:text="${profissional.nome}"></td>
+                        <td th:text="${profissional.cpf}"></td>
                         <td>
                             <div class="table-action-buttons">
-                                <a class="button-style edit" th:href="@{/usuarios/editar/{id} (id=${usuario.id}) }"
+                                <a class="button-style edit" th:href="@{/profissionais/editar/{id} (id=${profissional.id}) }"
                                     role="button"> 
                                     <span class="oi oi-brush" title="Editar" aria-hidden="true"> </span>
                                 </a>
                                 <button
-                                    th:id="${'btn_usuarios/excluir/' + usuario.id}"
+                                    th:id="${'btn_profissionais/excluir/' + profissional.id}"
                                     type="button" class="button-style delete"
                                     data-toggle="modal" data-target="#myModal">
                                     <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
@@ -42,8 +45,8 @@
             </table>
         </div>
         <div class="center" style="margin-block: 20px;">
-            <a class="button-style" th:href="@{/usuarios/novo}" role="button"> 
-                        <span>Novo Usuário</span>
+            <a class="button-style" th:href="@{/profissionais/cadastrar}" role="button"> 
+                        <span>Novo Profissional</span>
             </a>
         </div>
         <div th:replace="fragments/modal :: modal"></div>
