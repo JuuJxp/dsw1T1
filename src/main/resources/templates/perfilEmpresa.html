@@ -2,7 +2,7 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Perfil do Admin</title>
+    <title>Perfil da Empresa</title>
 </head>
 <body>
         <div class="profile-container" layout:fragment="corpo">
@@ -15,9 +15,9 @@
             <div class="button-group">
                 <a class="button-style" th:href="@{/usuarios/editar/id_usuario}">Alterar meus dados</a>
                 
-                <a class="button-style" th:href="@{/usuarios/listar}">Ver Profissionais</a>
+                <a class="button-style" th:href="@{/vagas/listar}">Ver minhas vagas</a>
                 
-                <a class="button-style" th:href="@{/empresas/listar}">Ver Empresas</a>
+                <a class="button-style" th:href="@{/vagas/cadastrar}">Adicionar nova vaga</a>
             </div>
         </div>
 

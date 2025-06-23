@@ -70,7 +70,7 @@ body {
     color: #FFFFFF; 
     border: none; 
     padding: 8px 15px;
-    border-radius: 5px; 
+    border-radius: 8px; 
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.3s ease;
@@ -110,3 +110,27 @@ body {
     margin-top: 30px;
 }
 /* FIM PAGINAS PROFILE */
+
+/* PAGINA DE CADASTRO */
+.role-selection-buttons{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.inactive{
+    background-color: #FFFFFF; 
+    color: #550066; 
+    border: #550066 1px solid; 
+}
+.inactive:hover {
+    background-color: #f2e7f4; 
+    color: #770099;
+    text-decoration: none;
+}
+.role-buttons{
+    width: 45%;
+    margin-inline: 10px;
+}
+/* FIM PAGINA DE CADASTRO */

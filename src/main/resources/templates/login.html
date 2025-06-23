@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<div class="container" style="text-align: center; width: 60%">
+			<h1>Betwin Vagas</h1>
+			<img alt="" th:src="@{/image/image.png}" style="width:100px;">
+			<div>
+                <p> Email: </p>
+				<input type="text" class="form-control" id="search" placeholder="Ex: Julia Tavares">
+                <p> Senha: </p>
+                <input type="password" class="form-control" id="search" placeholder="Digite sua senha">
+			</div>
+            
+            <div class="button-group">
+                <a class="button-style" th:href="@{/usuarios/logar/id_usuario}">Entrar</a>
+                <a class="button-style" th:href="@{/usuarios/cadastrar}">Não possuo conta</a>
+            </div>
+		</div>
+
+	</section>
+</body>
+</html>
