@@ -1,8 +1,6 @@
 package br.ufscar.dc.dsw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -23,10 +21,6 @@ public class ProfissionalController {
 
     @Autowired
     private IProfissionalService profissionalService;
-     
-    @Autowired 
-    @Lazy
-    private BCryptPasswordEncoder encoder;
 
     @GetMapping("/cadastrar")
     public String cadastrar(Profissional profissional, ModelMap model) {
@@ -42,12 +36,12 @@ public class ProfissionalController {
 
     @PostMapping("/salvar")
     public String salvar(@Valid Profissional profissional, BindingResult result, RedirectAttributes attr, ModelMap model) {
+        
+        profissionalService.validarCamposUnicos(profissional, result);
+        
         if (result.hasErrors()) {
             model.addAttribute("sexos", SexoProfissional.values());
             return "profissional/cadastro";
-        }
-        if (profissional.getId() == null) {
-            profissional.setSenha(encoder.encode(profissional.getSenha()));
         }
         profissionalService.salvar(profissional);
         attr.addFlashAttribute("sucess", "Profissional inserido com sucesso.");
@@ -63,17 +57,13 @@ public class ProfissionalController {
 
     @PostMapping("/editar")
     public String editar(@Valid Profissional profissional, BindingResult result, RedirectAttributes attr, ModelMap model) {
+        profissionalService.validarCamposUnicos(profissional, result);
         if (result.hasErrors()) {
             model.addAttribute("sexos", SexoProfissional.values());
             return "profissional/cadastro";
         }
-        Profissional profissionalExistente = profissionalService.buscarPorId(profissional.getId());
-        if (profissional.getSenha() == null || profissional.getSenha().isEmpty()) { 
-            profissional.setSenha(profissionalExistente.getSenha());
-        } else {
-            profissional.setSenha(encoder.encode(profissional.getSenha()));
-        }
         profissionalService.salvar(profissional);
+        
         attr.addFlashAttribute("sucess", "Profissional editado com sucesso.");
         return "redirect:/profissionais/listar";
     }

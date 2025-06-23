@@ -1,8 +1,6 @@
 package br.ufscar.dc.dsw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -23,10 +21,6 @@ public class EmpresaController {
     @Autowired
     private IEmpresaService service;
 
-    @Autowired 
-    @Lazy
-    private BCryptPasswordEncoder encoder;
-
     @GetMapping("/cadastrar")
     public String cadastrar(Empresa empresa) {
         return "empresa/cadastro";
@@ -40,12 +34,13 @@ public class EmpresaController {
 
     @PostMapping("/salvar")
     public String salvar(@Valid Empresa empresa, BindingResult result, RedirectAttributes attr) {
+        
+        service.validarCamposUnicos(empresa, result);
+
         if (result.hasErrors()) {
             return "empresa/cadastro";
         }
-        if (empresa.getId() == null) {
-            empresa.setSenha(encoder.encode(empresa.getSenha()));
-        }
+
         service.salvar(empresa);
         attr.addFlashAttribute("sucess", "Empresa inserida com sucesso.");
         return "redirect:/empresas/listar";
@@ -59,15 +54,9 @@ public class EmpresaController {
 
     @PostMapping("/editar")
     public String editar(@Valid Empresa empresa, BindingResult result, RedirectAttributes attr) {
-        if (result.hasErrors()) {
-            return "empresa/cadastro";
-        }
-        Empresa empresaExistente = service.buscarPorId(empresa.getId());
-        if (empresa.getSenha() == null || empresa.getSenha().isEmpty()) { 
-            empresa.setSenha(empresaExistente.getSenha());
-        } else {
-            empresa.setSenha(encoder.encode(empresa.getSenha()));
-        }
+        
+        service.validarCamposUnicos(empresa, result);
+
         service.salvar(empresa);
         attr.addFlashAttribute("sucess", "Empresa editada com sucesso.");
         return "redirect:/empresas/listar";

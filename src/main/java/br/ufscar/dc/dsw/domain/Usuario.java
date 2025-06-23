@@ -2,7 +2,6 @@ package br.ufscar.dc.dsw.domain;
 
 import java.sql.Timestamp;
 
-import br.ufscar.dc.dsw.validation.UniqueEmail;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +22,6 @@ import jakarta.validation.constraints.Size;
 public abstract class Usuario extends AbstractEntity<Long> {
 
     // Atributo email (não vazio, tamanho máximo 255 caracteres, deve ser um email válido)
-    @UniqueEmail(message = "{Unique.usuario.email}")
 	@NotBlank(message = "{NotBlank.usuario.email}")
 	@Size(max = 255, message = "{Size.usuario.email}")
     @Email(message = "{Email.usuario.email}")
@@ -31,7 +29,6 @@ public abstract class Usuario extends AbstractEntity<Long> {
 	private String email;
 
     // Atributo senha (não vazio, tamanho máximo 255 caracteres)
-	@NotBlank(message = "{NotBlank.usuario.senha}")
 	@Size(max = 255, message = "{Size.usuario.senha}")
 	@Column(nullable = false, length = 255)
 	private String senha;

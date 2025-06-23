@@ -2,6 +2,8 @@ package br.ufscar.dc.dsw.service.spec;
 
 import java.util.List;
 
+import org.springframework.validation.Errors;
+
 import br.ufscar.dc.dsw.domain.Profissional;
 
 public interface IProfissionalService {
@@ -11,4 +13,5 @@ public interface IProfissionalService {
     List<Profissional> buscarTodos();
     void salvar(Profissional profissional);
     void excluir(Long id);
+    void validarCamposUnicos(Profissional profissional, Errors errors);
 }
