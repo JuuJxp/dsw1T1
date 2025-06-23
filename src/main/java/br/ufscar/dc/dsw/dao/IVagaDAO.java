@@ -17,6 +17,7 @@ public interface IVagaDAO extends CrudRepository<Vaga, Long> {
     List<Vaga> findByDataLimiteInscricaoAfterAndEmpresaCidade(Date data, String cidade);
     List<Vaga> findByAtivaTrueAndDataLimiteInscricaoBefore(Date data);
     long countByEmpresaAndAtivaTrue(Empresa empresa);
+    List<Vaga> findByTitulo(String titulo);
     Vaga save(Vaga vaga);
     void deleteById(Long id);
 }
