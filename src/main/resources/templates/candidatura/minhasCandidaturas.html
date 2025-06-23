@@ -2,24 +2,24 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Minhas Candidaturas</title>
+    <title th:text="#{minhasCandidaturasTitulo.label}">Minhas Candidaturas</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
             <div class="alert-container" th:replace="fragments/alert"></div>
-            <h1 class="title-text" style="font-size: 2em;">Minhas Candidaturas</h1>
+            <h1 class="title-text" style="font-size: 2em;" th:text="#{minhasCandidaturasTitulo.label}">Minhas Candidaturas</h1>
             <img src="/image/candidatura.png" width="150px" style="margin-top: -20px" alt="Candidatura Icon" />
             
             <table class="table-lista">
                 <thead>
                     <tr>
-                        <th>Vaga</th>
-                        <th>Empresa</th>
-                        <th>Cidade da Vaga</th>
-                        <th>Remuneração</th>
-                        <th>Data Candidatura</th>
-                        <th>Status</th>
+                        <th th:text="#{tabelaVaga.label}">Vaga</th>
+                        <th th:text="#{tabelaEmpresa.label}">Empresa</th>
+                        <th th:text="#{tabelaCidadeVaga.label}">Cidade da Vaga</th>
+                        <th th:text="#{tabelaRemuneracao.label}">Remuneração</th>
+                        <th th:text="#{tabelaDataCandidatura.label}">Data Candidatura</th>
+                        <th th:text="#{tabelaStatusAtual.label}">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,13 +34,13 @@
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(candidaturas)}">
-                        <td colspan="7" style="text-align: center; color: #777;">Você ainda não se candidatou a nenhuma vaga.</td>
+                        <td colspan="7" style="text-align: center; color: #777;" th:text="#{nenhumaCandidaturaProfissional.label}">Você ainda não se candidatou a nenhuma vaga.</td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="center" style="margin-block: 20px;">
-                <a class="button-style" th:href="@{/vagas/listar}" role="button">Buscar Novas Vagas</a>
+                <a class="button-style" th:href="@{/vagas/listar}" role="button" th:text="#{buscarNovasVagas.label}">Buscar Novas Vagas</a>
             </div>
 
         </div>

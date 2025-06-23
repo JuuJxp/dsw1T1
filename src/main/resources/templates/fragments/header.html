@@ -5,12 +5,19 @@
     <header th:fragment="cabecalho">
         <nav class="header">
             <div class="header-title">
-                <a th:href="@{/}">Procurando por vagas? Lugar certo!</a>
+                <a th:href="@{/}" th:text="#{header.titulo}">Procurando por vagas? Lugar certo!</a>
             </div>
             <div class="header-buttons">
-                <a class="button-style" th:href="@{/perfilAdministrador}">Perfil</a>
-                <a class="button-style" th:href="@{/login}">Login</a>
-                <a class="button-style" th:href="@{/logout}">Sair</a>
+                <a class="button-style" th:href="@{/perfilAdministrador}" th:text="#{header.perfil}">Perfil</a>
+                <a class="button-style" th:href="@{/login}" th:text="#{header.login}">Login</a>
+                <a class="button-style" th:href="@{/logout}" th:text="#{header.sair}">Sair</a>
+
+                <a th:href="@{${currentUrl}(lang='pt_BR')}">
+                    <img th:src="@{/image/brasil.png}" alt="Português" style="width: 50px; margin-left: 10px;"/>
+                </a>
+                <a th:href="@{${currentUrl}(lang='en')}">
+                    <img th:src="@{/image/eua.png}" alt="English" style="width: 50px;"/>
+                </a>
             </div>
         </nav>
     </header>
