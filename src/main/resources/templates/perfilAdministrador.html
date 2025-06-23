@@ -2,22 +2,22 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Perfil do Admin</title>
+    <title th:text="#{perfilAdminTitulo.label}">Perfil do Admin</title>
 </head>
 <body>
         <div class="profile-container" layout:fragment="corpo">
 
-            <div class="title-text">
+            <div class="title-text" th:utext="#{perfilAdminBoasVindas.label}">
                 <br>Bem vindo de volta!
                 <br>o que deseja?
             </div>
 
             <div class="button-group">
-                <a class="button-style" th:href="@{/profissionais/listar}">Ver Profissionais</a>
+                <a class="button-style" th:href="@{/profissionais/listar}" th:text="#{verProfissionais.label}">Ver Profissionais</a>
                 
-                <a class="button-style" th:href="@{/empresas/listar}">Ver Empresas</a>
+                <a class="button-style" th:href="@{/empresas/listar}" th:text="#{verEmpresas.label}">Ver Empresas</a>
 
-                <a class="button-style" th:href="@{/usuarios/novo}">Cadastrar novo usuário</a>
+                <a class="button-style" th:href="@{/usuarios/novo}" th:text="#{cadastrarNovoUsuario.label}">Cadastrar novo usuário</a>
             </div>
         </div>
 

@@ -2,20 +2,20 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Lista de Usuários</title>
+    <title th:text="#{listaUsuariosTitulo.label}">Lista de Usuários</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
             <div class="alert-container" th:replace="fragments/alert"></div>
-            <h1 class="title-text" style="font-size: 2em;">Lista de Usuários</h1>
+            <h1 class="title-text" style="font-size: 2em;" th:text="#{listaUsuariosTitulo.label}">Lista de Usuários</h1>
             <table class="table-lista">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Email</th>
-                        <th>Papel</th>
-                        <th>Ação</th>
+                        <th th:text="#{email.label}">Email</th>
+                        <th th:text="#{tabelaPapel.label}">Papel</th>
+                        <th th:text="#{tabelaAcoes.label}">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,14 +26,14 @@
                         <td>
                             <div class="table-action-buttons">
                                 <a class="button-style edit" th:href="@{/usuarios/editar/{id} (id=${usuario.id}) }"
-                                    role="button"> 
-                                    <span class="oi oi-brush" title="Editar" aria-hidden="true"> </span>
+                                    role="button" th:title="#{editar.label}"> 
+                                    <span class="oi oi-brush" aria-hidden="true"> </span>
                                 </a>
                                 <button
                                     th:id="${'btn_usuarios/excluir/' + usuario.id}"
                                     type="button" class="button-style delete"
-                                    data-toggle="modal" data-target="#myModal">
-                                    <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+                                    data-toggle="modal" data-target="#myModal" th:title="#{excluir.label}">
+                                    <span class="oi oi-circle-x" aria-hidden="true"></span>
                                 </button>
                             </div>
                         </td>
@@ -43,7 +43,7 @@
         </div>
         <div class="center" style="margin-block: 20px;">
             <a class="button-style" th:href="@{/usuarios/novo}" role="button"> 
-                        <span>Novo Usuário</span>
+                <span th:text="#{novoUsuario.label}">Novo Usuário</span>
             </a>
         </div>
         <div th:replace="fragments/modal :: modal"></div>

@@ -2,12 +2,12 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Gerenciar Candidaturas</title>
+    <title th:text="#{gerenciarCandidaturasTitulo.label}">Gerenciar Candidaturas</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
-            <h1 class="title-text" style="font-size: 2em;">Gerenciar candidaturas da vaga</h1>
+            <h1 class="title-text" style="font-size: 2em;" th:text="#{gerenciarCandidaturasVaga.label}">Gerenciar candidaturas da vaga</h1>
             
             <div class="job-card" style="width: 80%;">
                 <div class="job-card-header">
@@ -26,17 +26,17 @@
                 </div>
             </div>
 
-            <h2 class="title-text" style="font-size: 1.5em; color:black; margin-top: 30px;">Candidatos</h2>
-            <div th:replace="~{fragments/alert}"></div>
+            <h2 class="title-text" style="font-size: 1.5em; color:black; margin-top: 30px;" th:text="#{candidatos.label}">Candidatos</h2>
+            <div th:replace="fragments/alert"></div>
 
             <table class="table-lista" style="width: 80%;">
                 <thead>
                     <tr>
-                        <th>Candidato</th>
-                        <th>Email do Candidato</th>
-                        <th>Data Candidatura</th>
-                        <th>Status Atual</th>
-                        <th>Ações</th>
+                        <th th:text="#{tabelaCandidato.label}">Candidato</th>
+                        <th th:text="#{tabelaEmailCandidato.label}">Email do Candidato</th>
+                        <th th:text="#{tabelaDataCandidatura.label}">Data Candidatura</th>
+                        <th th:text="#{tabelaStatusAtual.label}">Status Atual</th>
+                        <th th:text="#{tabelaAcoes.label}">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,28 +52,28 @@
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 <input type="hidden" name="idCandidatura" th:value="${candidatura.id}" />
                                 
-                                <a class="button-style" th:href="@{'/candidaturas/curriculo/' + ${candidatura.id}}" target="_blank" style="margin-right: 5px; background-color: #007bff;">Ver Currículo</a>
+                                <a class="button-style" th:href="@{'/candidaturas/curriculo/' + ${candidatura.id}}" target="_blank" style="margin-right: 5px; background-color: #007bff;" th:text="#{verCurriculo.label}">Ver Currículo</a>
                                 <select name="status" class="status-select" onchange="toggleLinkEntrevista(this)">
                                     <option th:each="statusOption : ${statusOptions}" 
                                             th:value="${statusOption}" 
                                             th:text="${statusOption}"
                                             th:selected="${statusOption.name() == candidatura.statusVaga.name()}"</option>
                                 </select>
-                                <input type="text" name="linkEntrevista" placeholder="Link da entrevista (se ENTREVISTA)" 
-                                       th:value="${candidatura.statusVaga.name() == 'ENTREVISTA' ? 'ENVIADO' : ''}"
-                                       style="width: 200px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;"/>
-                                <button type="submit" class="button-style">Atualizar</button>
+                                <input type="text" name="linkEntrevista" th:placeholder="#{linkEntrevistaPlaceholder.label}" 
+                                        th:value="${candidatura.statusVaga.name() == 'ENTREVISTA' ? 'ENVIADO' : ''}"
+                                        style="width: 200px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;"/>
+                                <button type="submit" class="button-style" th:text="#{atualizar.label}">Atualizar</button>
                             </form>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(candidaturas)}">
-                        <td colspan="5" style="text-align: center; color: #777;">Nenhuma candidatura para esta vaga ainda.</td>
+                        <td colspan="5" style="text-align: center; color: #777;" th:text="#{nenhumaCandidatura.label}">Nenhuma candidatura para esta vaga ainda.</td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="center" style="margin-block: 20px;">
-                <a class="button-style" th:href="@{/vagas/minhasVagas}" role="button">Voltar para minhas vagas</a>
+                <a class="button-style" th:href="@{/vagas/minhasVagas}" role="button" th:text="#{voltarMinhasVagas.label}">Voltar para minhas vagas</a>
             </div>
 
         </div>

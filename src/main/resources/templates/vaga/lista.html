@@ -2,15 +2,15 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Vagas abertas</title>
+    <title th:text="#{vagasAbertasTitulo.label}">Vagas abertas</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container">
             <form th:action="@{/vagas/listar}" method="GET" class="busca">
                 <input type="text" id="filterLocation" name="cidade" 
-                       placeholder="Filtrar por cidade..." th:value="${param.cidade}" />
-                <button type="submit" class="button-style">Buscar Vaga</button>
+                        th:placeholder="#{filtrarCidadePlaceholder.label}" th:value="${param.cidade}" />
+                <button type="submit" class="button-style" th:text="#{buscarVaga.label}">Buscar Vaga</button>
             </form>
 
             <div th:each="vaga : ${vagas}" class="job-card">
@@ -23,19 +23,20 @@
                 </div>
                 <div class="job-details company-info">
                     <span th:text="${vaga.empresa.nome}">Empresa ABC</span>
-                    <a th:href="@{'/empresas/' + ${vaga.empresa.id} + '/vagas'}">
-                            + <span th:text="${empresaVagasCountMap.get(vaga.empresa.id)}">x</span> anúncios dessa empresa!
+                    <a>
+                        + <span th:text="${empresaVagasCountMap.get(vaga.empresa.id)}">x</span>
+                        <span th:text="#{anunciosDessaEmpresa.label}">anúncios dessa empresa!</span>
                     </a>
                 </div>
                 <span th:text="${vaga.descricao}">descrição blablabla...</span>
                 <div class="job-footer">
                     <span class="company-info" th:text="${vaga.cidade} + ' - ' + ${vaga.estado}">cidade - XX</span>
-                    <a th:href="@{/candidaturas/candidatar/{idVaga}(idVaga=${vaga.id})}" class="button-style">Candidatar-se</a>
+                    <a th:href="@{/candidaturas/candidatar/{idVaga}(idVaga=${vaga.id})}" class="button-style" th:text="#{seCandidatar.label}">Candidatar-se</a>
                 </div>
             </div>
 
             <div th:if="${#lists.isEmpty(vagas)}" class="job-card" style="text-align: center; color: #777;">
-                <p>Nenhuma vaga encontrada no momento. Por favor, tente mais tarde.</p>
+                <p th:text="#{nenhumaVagaEncontrada.label}">Nenhuma vaga encontrada no momento. Por favor, tente mais tarde.</p>
             </div>
 
         </div>

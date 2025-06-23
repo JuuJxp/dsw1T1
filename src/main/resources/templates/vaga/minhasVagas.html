@@ -2,24 +2,24 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Minhas Vagas</title> 
+    <title th:text="#{minhasVagasPublicadasHeader.label}">Minhas Vagas Publicadas</title> 
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
             <div class="alert-container" th:replace="fragments/alert"></div>
-            <h1 class="title-text" style="font-size: 2em;">Minhas Vagas Publicadas</h1>
+            <h1 class="title-text" style="font-size: 2em;" th:text="#{minhasVagasPublicadasHeader.label}">Minhas Vagas Publicadas</h1>
             <img src="/image/vaga.png" width="150px" style="margin-top: -20px" alt="Vaga Icon" />
             
             <table class="table-lista">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Título</th>
-                        <th>Remuneração</th>
-                        <th>descricao</th>
-                        <th>Empresa</th>
-                        <th>Ação</th>
+                        <th th:text="#{titulo.label}">Título</th>
+                        <th th:text="#{remuneracao.label}">Remuneração</th>
+                        <th th:text="#{descricao.label}">descricao</th>
+                        <th th:text="#{tabelaEmpresa.label}">Empresa</th>
+                        <th th:text="#{tabelaAcoes.label}">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,26 +31,26 @@
                         <td th:text="${vaga.empresa.nome}"></td>
                         <td>
                             <div class="table-action-buttons">
-                                <a class="button-style" th:href="@{/candidaturas/gerenciar/{idVaga}(idVaga=${vaga.id})}" role="button">
-                                 Candidaturas
+                                <a class="button-style" th:href="@{/candidaturas/gerenciar/{idVaga}(idVaga=${vaga.id})}" role="button" th:text="#{candidaturas.label}">
+                                   Candidaturas
                                 </a>
                                 <button
                                     th:id="${'btn_vagas/excluir/' + vaga.id}"
                                     type="button" class="button-style delete"
-                                    data-toggle="modal" data-target="#myModal">
-                                    <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+                                    data-toggle="modal" data-target="#myModal" th:title="#{excluir.label}">
+                                    <span class="oi oi-circle-x" aria-hidden="true"></span>
                                 </button>
                             </div>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(vagas)}">
-                        <td colspan="7" style="text-align: center; color: #777;">Você ainda não cadastrou nenhuma vaga.</td>
+                        <td colspan="7" style="text-align: center; color: #777;" th:text="#{nenhumaVagaPublicada.label}">Você ainda não cadastrou nenhuma vaga.</td>
                     </tr>
                 </tbody>
             </table>
             
             <div class="center" style="margin-block: 20px;">
-                <a class="button-style" th:href="@{/vagas/cadastrar}" role="button">Cadastrar novas vagas</a>
+                <a class="button-style" th:href="@{/vagas/cadastrar}" role="button" th:text="#{cadastrarNovasVagas.label}">Cadastrar novas vagas</a>
             </div>
 
         </div>

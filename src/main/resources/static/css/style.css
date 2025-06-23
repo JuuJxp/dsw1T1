@@ -17,6 +17,7 @@ body {
     border-radius: 4px;
     border: 1px solid #ccc;
 }
+
 .status-ABERTO { color: blue; font-weight: bold; }
 .status-NAO_SELECIONADO { color: red; font-weight: bold; }
 .status-ENTREVISTA { color: green; font-weight: bold; }
@@ -209,9 +210,6 @@ body {
 .company-info a {
     color: #550066;
     text-decoration: none;
-}
-.company-info a:hover {
-    text-decoration: underline;
 }
 
 .bold {

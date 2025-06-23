@@ -2,43 +2,43 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Candidatura de vaga</title>  
+    <title th:text="#{candidaturaVaga.label}">Candidatura de vaga</title>
 </head>
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
-            <h1 class="title-text" style="font-size: 2em;">Candidatura</h1>
-            <h1 class="title-text" style="font-size: 1.5em; color:black">Detalhes da vaga</h1>
+            <h1 class="title-text" style="font-size: 2em;" th:text="#{candidaturaVaga.label}">Candidatura</h1>
+            <h1 class="title-text" style="font-size: 1.5em; color:black" th:text="#{detalhesVaga.label}">Detalhes da vaga</h1>
             <div class="job-card" style="width: 40%;">
                 <div class="job-card-header">
-                        <h2 th:text="${vaga.titulo}">Título da vaga</h2>
-                        <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/YYYY')}">xx/xx/xxxx</span>
-                    </div>
-                    <div class="job-details">
-                        <span class="bold" th:text="${#numbers.formatCurrency(vaga.remuneracao)}">remuneração</span>
-                    </div>
-                    <div class="job-details company-info">
-                        <span th:text="${vaga.empresa.nome}">Empresa ABC</span>
-                    </div>
-                    <span th:text="${vaga.descricao}">descrição blablabla...</span>
-                    <div class="job-footer">
-                        <span class="company-info" th:text="${vaga.cidade} + ' - ' + ${vaga.estado}">cidade - XX</span>
-                    </div>
+                    <h2 th:text="${vaga.titulo}">Título da vaga</h2>
+                    <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/YYYY')}">xx/xx/xxxx</span>
+                </div>
+                <div class="job-details">
+                    <span class="bold" th:text="${#numbers.formatCurrency(vaga.remuneracao)}">remuneração</span>
+                </div>
+                <div class="job-details company-info">
+                    <span th:text="${vaga.empresa.nome}">Empresa ABC</span>
+                </div>
+                <span th:text="${vaga.descricao}">descrição blablabla...</span>
+                <div class="job-footer">
+                    <span class="company-info" th:text="${vaga.cidade} + ' - ' + ${vaga.estado}">cidade - XX</span>
+                </div>
             </div>
-            <!-- Fragmento para exibir alertas de sucesso ou falha -->
             <div th:replace="fragments/alert"></div>
 
             <form th:action="@{/candidaturas/salvar/{idVaga}(idVaga=${vaga.id})}" method="POST" style="width: 40%;" enctype="multipart/form-data" th:object="${candidatura}">
+
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <!-- titulo -->
                 <div class="item-form center">
-                    <label for="file">Anexar currículo em PDF</label> 
+                    <label for="file" th:text="#{anexarCurriculo.label}">Anexar currículo em PDF</label>
                     <input type="file" class="form-control" id="file" name="file" accept="application/pdf" style="border: none;" required/>
                 </div>
 
                 <div class="center" style="flex-direction: row;">
-                    <a style="margin-inline: 10px;" th:href="@{/vagas/listar}" class="button-style inactive">Cancelar</a>
-                    <button style="margin-inline: 10px;" type="submit" class="button-style">Se Candidatar</button>
+                    <a style="margin-inline: 10px;" th:href="@{/vagas/listar}" class="button-style inactive" th:text="#{cancelar.label}">Cancelar</a>
+                    <button style="margin-inline: 10px;" type="submit" class="button-style" th:text="#{seCandidatar.label}">Se Candidatar</button>
                 </div>
             </form>
         </div>
