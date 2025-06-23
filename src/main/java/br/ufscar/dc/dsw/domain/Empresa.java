@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.domain;
 
 import java.util.List;
 
+import br.ufscar.dc.dsw.validation.UniqueCNPJ;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -17,6 +18,7 @@ import jakarta.validation.constraints.Size;
 @PrimaryKeyJoinColumn(name = "id_usuario")
 public class Empresa extends Usuario {
 
+    @UniqueCNPJ(message = "{Unique.empresa.cnpj}")
     @NotBlank(message = "{NotBlank.empresa.cnpj}")
     @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}", message = "{Pattern.empresa.cnpj}")
     @Column(nullable = false, length = 18, unique = true)

@@ -1,6 +1,14 @@
 package br.ufscar.dc.dsw.validation;
 
-public class UniqueEmail {
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+import java.lang.annotation.*;
 
+@Constraint(validatedBy = UniqueEmailValidator.class)
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface UniqueEmail {
+    String message() default "Email já cadastrado.";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }
-// AO IMPLEMENTAR ESSE CODIGO, ALTERAR A VALIDAÇÃO NO USUARIODOMAIN PARA USAR O UniqueEmailValidator

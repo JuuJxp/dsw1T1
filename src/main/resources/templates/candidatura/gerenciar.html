@@ -49,6 +49,7 @@
                         </td>
                         <td>
                             <form th:action="@{/candidaturas/atualizarStatus}" method="POST" class="status-form">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 <input type="hidden" name="idCandidatura" th:value="${candidatura.id}" />
                                 
                                 <a class="button-style" th:href="@{'/candidaturas/curriculo/' + ${candidatura.id}}" target="_blank" style="margin-right: 5px; background-color: #007bff;" th:text="#{verCurriculo.label}">Ver Currículo</a>

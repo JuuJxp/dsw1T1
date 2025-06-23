@@ -64,7 +64,7 @@ public class VagaService implements IVagaService {
     @Transactional(readOnly = true)
     public List<Vaga> buscarVagasEmAbertoPorCidade(String cidade) {
         desativarVagasExpiradas();
-        return dao.findByDataLimiteInscricaoAfterAndEmpresaCidade(Date.valueOf(LocalDate.now()), cidade);
+        return dao.findByDataLimiteInscricaoAfterAndCidadeIgnoreCase(Date.valueOf(LocalDate.now()), cidade);
     }
     
     @Transactional(readOnly = true)

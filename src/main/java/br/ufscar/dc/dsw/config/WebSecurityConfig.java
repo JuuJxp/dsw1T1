@@ -31,11 +31,12 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-      .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(auth -> auth
           .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
           // por enquanto deixar sem precisar logar essas rotas (depois precisa de login como admin)
-          .requestMatchers("/", "/error", "/login/**", "/vagas/listar**").permitAll()
+          .requestMatchers("/", "/error", "/login/**", "/usuarios/novo", "/profissionais/cadastrar", "/empresas/cadastrar").permitAll()
+          .requestMatchers("/profissionais/salvar", "/empresas/salvar").permitAll()
+          .requestMatchers("/vagas/listar**").permitAll()
 
           .requestMatchers("/perfilAdministrador", "/profissionais/cadastrar", "/empresas/cadastrar", "/usuarios/novo", "/profissionais/salvar", "/empresas/salvar", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/excluir/**").hasRole("ADMIN")
 
@@ -49,7 +50,7 @@ public class WebSecurityConfig {
         .formLogin(form -> form
           .loginPage("/login") 
           .successHandler(customAuthenticationSuccessHandler)
-          .failureUrl("/login?error=true") 
+          .failureUrl("/erro?msg=Usuario ou senha invalida") 
           .permitAll()
         )
         .logout(logout -> logout

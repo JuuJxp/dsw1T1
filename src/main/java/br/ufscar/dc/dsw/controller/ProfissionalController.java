@@ -80,8 +80,12 @@ public class ProfissionalController {
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
-        profissionalService.excluir(id);
-        attr.addFlashAttribute("sucess", "Profissional excluído com sucesso.");
+        try {
+            profissionalService.excluir(id);
+            attr.addFlashAttribute("sucess", "Profissional excluído com sucesso.");
+        } catch (Exception e) {
+                return "redirect:/erro?msg=Não foi possível excluir o profissional. Verifique as relações.";
+            }
         return "redirect:/profissionais/listar";
     }
 }
