@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,10 @@ public class ProfissionalController {
     @Autowired
     private IProfissionalService profissionalService;
      
+    @Autowired 
+    @Lazy
+    private BCryptPasswordEncoder encoder;
+
     @GetMapping("/cadastrar")
     public String cadastrar(Profissional profissional, ModelMap model) {
         model.addAttribute("sexos", SexoProfissional.values());
@@ -40,6 +46,9 @@ public class ProfissionalController {
             model.addAttribute("sexos", SexoProfissional.values());
             return "profissional/cadastro";
         }
+        if (profissional.getId() == null) {
+            profissional.setSenha(encoder.encode(profissional.getSenha()));
+        }
         profissionalService.salvar(profissional);
         attr.addFlashAttribute("sucess", "Profissional inserido com sucesso.");
         return "redirect:/profissionais/listar";
@@ -57,6 +66,12 @@ public class ProfissionalController {
         if (result.hasErrors()) {
             model.addAttribute("sexos", SexoProfissional.values());
             return "profissional/cadastro";
+        }
+        Profissional profissionalExistente = profissionalService.buscarPorId(profissional.getId());
+        if (profissional.getSenha() == null || profissional.getSenha().isEmpty()) { 
+            profissional.setSenha(profissionalExistente.getSenha());
+        } else {
+            profissional.setSenha(encoder.encode(profissional.getSenha()));
         }
         profissionalService.salvar(profissional);
         attr.addFlashAttribute("sucess", "Profissional editado com sucesso.");

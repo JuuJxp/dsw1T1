@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.ufscar.dc.dsw.dao.IAdministradorDAO;
 import br.ufscar.dc.dsw.dao.IEmpresaDAO;
@@ -25,12 +25,7 @@ public class BetwinVagasApplication {
 	}
 
 	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Bean
-	public CommandLineRunner demo(IAdministradorDAO administradorDAO, IEmpresaDAO empresaDAO, IProfissionalDAO profissionalDAO, BCryptPasswordEncoder encoder) { // Adicione BCryptPasswordEncoder
+	public CommandLineRunner demo(IAdministradorDAO administradorDAO, IEmpresaDAO empresaDAO, IProfissionalDAO profissionalDAO, BCryptPasswordEncoder encoder) {
 		return (args) -> {
 			if (administradorDAO.findByEmail("admin@example.com") == null) {
 				Administrador adm = new Administrador();
