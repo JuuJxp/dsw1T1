@@ -10,7 +10,10 @@
             <div class="header-buttons">
                 <a class="button-style" th:href="@{/perfilAdministrador}">Perfil</a>
                 <a class="button-style" th:href="@{/login}">Login</a>
-                <a class="button-style" th:href="@{/logout}">Sair</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="button-style" style="border: none; cursor: pointer;">Sair</button>
+                </form>
             </div>
         </nav>
     </header>
