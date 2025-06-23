@@ -11,6 +11,8 @@ public interface IVagaService {
     List<Vaga> buscarPorEmpresa(Empresa empresa);
     List<Vaga> buscarTodasVagasEmAberto();
     List<Vaga> buscarVagasEmAbertoPorCidade(String cidade);
+    long contarVagasAtivasPorEmpresa(Empresa empresa);
+    void desativarVagasExpiradas();
     void salvar(Vaga vaga);
     void excluir(Long id);
 }
