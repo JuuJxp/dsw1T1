@@ -1,8 +1,14 @@
 package br.ufscar.dc.dsw.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +25,7 @@ import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.StatusCandidatura;
 import br.ufscar.dc.dsw.domain.Vaga;
 import br.ufscar.dc.dsw.service.spec.ICandidaturaService;
+import br.ufscar.dc.dsw.service.spec.IEmailService;
 import br.ufscar.dc.dsw.service.spec.IEmpresaService;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
 import br.ufscar.dc.dsw.service.spec.IVagaService;
@@ -35,6 +42,9 @@ public class CandidaturaController {
 
     @Autowired
     private IVagaService vagaService;
+
+    @Autowired
+    private IEmailService emailService;
 
     @Autowired
     private IEmpresaService empresaService;
@@ -85,15 +95,44 @@ public class CandidaturaController {
             return "redirect:/erro?msg=Não encontramos essa vaga ou profissional";
         }
 
+        try {
+        // Verifica se o arquivo não está vazio e se é um PDF
+        if (file.isEmpty() || !file.getContentType().equals("application/pdf")) {
+            attr.addFlashAttribute("fail", "Por favor, anexe um currículo em formato PDF.");
+            return "redirect:/candidaturas/candidatar/" + idVaga;
+        }
             Candidatura candidatura = new Candidatura();
             candidatura.setProfissional(profissional);
             candidatura.setVaga(vaga);
             candidatura.setStatusVaga(StatusCandidatura.ABERTO);
 
+            candidatura.setCurriculo(file.getBytes());
+
             candidaturaService.salvar(candidatura);
             attr.addFlashAttribute("sucess", "Candidatura realizada com sucesso!");
-        
+        } catch (IOException e) {
+        attr.addFlashAttribute("fail", "Ocorreu um erro ao processar o seu currículo.");
+        return "redirect:/candidaturas/candidatar/" + idVaga;
+        }
         return "redirect:/candidaturas/minhasCandidaturas";
+    }
+
+    @GetMapping("/curriculo/{id}") public ResponseEntity<Resource> baixarCurriculo(@PathVariable("id") Long id) {
+        Candidatura candidatura = candidaturaService.buscarPorId(id);
+        
+        if (candidatura == null || candidatura.getCurriculo() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Resource resource = new ByteArrayResource(candidatura.getCurriculo());
+        
+        String filename = "curriculo-" + candidatura.getProfissional().getNome().replace(" ", "_") + ".pdf";
+
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_PDF)
+            // O header "Content-Disposition" faz download
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+            .body(resource);
     }
 
     @GetMapping("/minhasCandidaturas")
@@ -135,10 +174,30 @@ public class CandidaturaController {
         candidatura.setStatusVaga(status);
         candidaturaService.salvar(candidatura);
 
+        String emailCandidato = candidatura.getProfissional().getEmail();
+        String nomeCandidato = candidatura.getProfissional().getNome();
+        String tituloVaga = candidatura.getVaga().getTitulo();
+        String nomeEmpresa = empresa.getNome();
+        String assunto = "Atualização sobre sua candidatura para a vaga: " + tituloVaga;
+
         if (status == StatusCandidatura.ENTREVISTA) {
-            attr.addFlashAttribute("sucess", "Status atualizado para ENTREVISTA. E-mail com link será enviado.");
+            String corpoEmail = String.format(
+                "Olá, %s!\n\nÓtimas notícias! A empresa %s gostaria de te convidar para uma entrevista para a vaga de %s.\n\nA entrevista será realizada através do seguinte link: %s\n\nBoa sorte!\n\nAtenciosamente,\nEquipe Betwin Vagas",
+                nomeCandidato, nomeEmpresa, tituloVaga, linkEntrevista
+            );
+            emailService.sendEmail(emailCandidato, assunto, corpoEmail);
+            attr.addFlashAttribute("sucess", "Status atualizado para ENTREVISTA e e-mail enviado ao candidato.");
+        
+        } else if (status == StatusCandidatura.NAO_SELECIONADO) {
+            String corpoEmail = String.format(
+                "Olá, %s.\n\nAgradecemos seu interesse na vaga de %s na empresa %s. No momento, optamos por seguir com outros candidatos.\n\nAgradecemos sua participação e desejamos sucesso em sua busca por novas oportunidades.\n\nAtenciosamente,\nEquipe Betwin Vagas",
+                nomeCandidato, tituloVaga, nomeEmpresa
+            );
+            emailService.sendEmail(emailCandidato, assunto, corpoEmail);
+            attr.addFlashAttribute("sucess", "Status atualizado para NÃO SELECIONADO e e-mail de notificação enviado.");
+        
         } else {
-            attr.addFlashAttribute("sucess", "Status da candidatura atualizado para " + status.name() + ".");
+             attr.addFlashAttribute("sucess", "Status da candidatura atualizado para " + status.name() + ".");
         }
         
         return "redirect:/candidaturas/gerenciar/" + candidatura.getVaga().getId();

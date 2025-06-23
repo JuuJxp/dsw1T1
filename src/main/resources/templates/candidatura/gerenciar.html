@@ -12,7 +12,7 @@
             <div class="job-card" style="width: 80%;">
                 <div class="job-card-header">
                     <h2 th:text="${vaga.titulo}">Título da vaga</h2>
-                    <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/YYYY')}">xx/xx/xxxx</span>
+                    <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/yyyy')}">xx/xx/xxxx</span>
                 </div>
                 <div class="job-details">
                     <span class="bold" th:text="${#numbers.formatCurrency(vaga.remuneracao)}">remuneração</span>
@@ -43,7 +43,7 @@
                     <tr th:each="candidatura : ${candidaturas}">
                         <td th:text="${candidatura.profissional.nome}">Nome do Profissional</td>
                         <td th:text="${candidatura.profissional.email}">Email do Profissional</td>
-                        <td th:text="${#dates.format(candidatura.dataCandidatura, 'dd/MM/YYYY HH:mm')}">Data da Candidatura</td>
+                        <td th:text="${#dates.format(candidatura.dataCandidatura, 'dd/MM/yyyy HH:mm')}">Data da Candidatura</td>
                         <td>
                             <span th:classappend="'status-' + ${candidatura.statusVaga.name()}" th:text="${candidatura.statusVaga}">Status</span>
                         </td>
@@ -53,14 +53,14 @@
                                 <input type="hidden" name="idCandidatura" th:value="${candidatura.id}" />
                                 
                                 <a class="button-style" th:href="@{'/candidaturas/curriculo/' + ${candidatura.id}}" target="_blank" style="margin-right: 5px; background-color: #007bff;" th:text="#{verCurriculo.label}">Ver Currículo</a>
-                                <select name="status" class="status-select">
+                                <select name="status" class="status-select" onchange="toggleLinkEntrevista(this)">
                                     <option th:each="statusOption : ${statusOptions}" 
                                             th:value="${statusOption}" 
                                             th:text="${statusOption}"
-                                            th:selected="${statusOption == candidatura.statusVaga}"></option>
+                                            th:selected="${statusOption.name() == candidatura.statusVaga.name()}"</option>
                                 </select>
                                 <input type="text" name="linkEntrevista" th:placeholder="#{linkEntrevistaPlaceholder.label}" 
-                                        th:value="${candidatura.statusVaga == T(br.ufscar.dc.dsw.domain.StatusCandidatura).ENTREVISTA ? 'ENVIADO' : ''}" 
+                                        th:value="${candidatura.statusVaga.name() == 'ENTREVISTA' ? 'ENVIADO' : ''}"
                                         style="width: 200px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;"/>
                                 <button type="submit" class="button-style" th:text="#{atualizar.label}">Atualizar</button>
                             </form>
@@ -77,6 +77,33 @@
             </div>
 
         </div>
+        <script th:inline="javascript">
+            function toggleLinkEntrevista(selectElement) {
+                const form = selectElement.closest('.status-form');
+                
+                const linkInput = form.querySelector('input[name="linkEntrevista"]');
+            
+                const statusSelecionado = selectElement.value;
+
+                if (statusSelecionado === 'ENTREVISTA') {
+                    linkInput.disabled = false;
+                    linkInput.placeholder = 'Cole o link da entrevista aqui';
+                    if (linkInput.value === 'ENVIADO') {
+                        linkInput.value = ''; 
+                    }
+                } else {
+                    linkInput.disabled = true; 
+                    linkInput.value = '';      
+                    linkInput.placeholder = 'Link da entrevista (se ENTREVISTA)';
+                }
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                const allSelects = document.querySelectorAll('.status-select');
+                allSelects.forEach(function(select) {
+                    toggleLinkEntrevista(select);
+                });
+            });
+        </script>
     </section>
 </body>
 </html>
