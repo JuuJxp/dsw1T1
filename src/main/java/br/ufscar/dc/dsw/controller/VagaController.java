@@ -84,7 +84,11 @@ public class VagaController {
     @GetMapping("/minhasVagas")
     public String minhasVagas(ModelMap model, Principal principal) {
         Empresa empresa = empresaService.buscarPorEmail(principal.getName());
-        model.addAttribute("vagas", vagaService.buscarPorEmpresa(empresa));
+        List<Vaga> vagasAtivas = vagaService.buscarVagasAbertasPorEmpresa(empresa);
+        List<Vaga> vagasExpiradas = vagaService.buscarVagasExpiradasPorEmpresa(empresa);
+
+        model.addAttribute("vagasAtivas", vagasAtivas);
+        model.addAttribute("vagasExpiradas", vagasExpiradas);
         return "vaga/minhasVagas"; 
     }
 

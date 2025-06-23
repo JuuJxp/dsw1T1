@@ -15,4 +15,6 @@ public interface IVagaService {
     void desativarVagasExpiradas();
     void salvar(Vaga vaga);
     void excluir(Long id);
+    List<Vaga> buscarVagasAbertasPorEmpresa(Empresa empresa);
+    List<Vaga> buscarVagasExpiradasPorEmpresa(Empresa empresa);
 }

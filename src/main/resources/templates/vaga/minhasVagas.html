@@ -7,32 +7,29 @@
 <body>
     <section class="layout-content" layout:fragment="corpo">
         <div class="container center">
-            <div class="alert-container" th:replace="fragments/alert"></div>
+            <div class="alert-container" th:replace="~{fragments/alert}"></div>
             <h1 class="title-text" style="font-size: 2em;" th:text="#{minhasVagasPublicadasHeader.label}">Minhas Vagas Publicadas</h1>
             <img src="/image/vaga.png" width="150px" style="margin-top: -20px" alt="Vaga Icon" />
             
+            <h2 class="title-text" style="font-size: 1.5em; color:black; margin-top: 30px;" th:text="#{vagasAtivas.header.label}">Vagas Ativas (Inscrições Abertas)</h2>
             <table class="table-lista">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th th:text="#{titulo.label}">Título</th>
-                        <th th:text="#{remuneracao.label}">Remuneração</th>
-                        <th th:text="#{descricao.label}">descricao</th>
-                        <th th:text="#{tabelaEmpresa.label}">Empresa</th>
+                        <th th:text="#{dataLimite.label}">Data Limite</th>
                         <th th:text="#{tabelaAcoes.label}">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="vaga: ${vagas}">
+                    <tr th:each="vaga: ${vagasAtivas}">
                         <td th:text="${vaga.id}"></td>
                         <td th:text="${vaga.titulo}"></td>
-                        <td th:text="${vaga.remuneracao}"></td>
-                        <td th:text="${vaga.descricao}"></td>
-                        <td th:text="${vaga.empresa.nome}"></td>
+                        <td th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/yyyy')}"></td>
                         <td>
                             <div class="table-action-buttons">
-                                <a class="button-style" th:href="@{/candidaturas/gerenciar/{idVaga}(idVaga=${vaga.id})}" role="button" th:text="#{candidaturas.label}">
-                                   Candidaturas
+                                <a class="button-style" disabled style="background-color: #ccc; cursor: not-allowed;" th:title="#{gerenciarDesabilitado.title}" th:text="#{candidaturas.label}">
+                                    Candidaturas
                                 </a>
                                 <button
                                     th:id="${'btn_vagas/excluir/' + vaga.id}"
@@ -43,8 +40,37 @@
                             </div>
                         </td>
                     </tr>
-                    <tr th:if="${#lists.isEmpty(vagas)}">
-                        <td colspan="7" style="text-align: center; color: #777;" th:text="#{nenhumaVagaPublicada.label}">Você ainda não cadastrou nenhuma vaga.</td>
+                    <tr th:if="${#lists.isEmpty(vagasAtivas)}">
+                        <td colspan="4" style="text-align: center; color: #777;" th:text="#{nenhumaVagaAtiva.message}">Nenhuma vaga com inscrições abertas no momento.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="title-text" style="font-size: 1.5em; color:black; margin-top: 50px;" th:text="#{vagasExpiradas.header.label}">Vagas a Classificar (Inscrições Encerradas)</h2>
+            <table class="table-lista">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th th:text="#{titulo.label}">Título</th>
+                        <th th:text="#{dataLimite.label}">Data Limite</th>
+                        <th th:text="#{tabelaAcoes.label}">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vaga: ${vagasExpiradas}">
+                        <td th:text="${vaga.id}"></td>
+                        <td th:text="${vaga.titulo}"></td>
+                        <td th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/yyyy')}"></td>
+                        <td>
+                            <div class="table-action-buttons">
+                                <a class="button-style" th:href="@{/candidaturas/gerenciar/{idVaga}(idVaga=${vaga.id})}" role="button" th:text="#{gerenciarCandidaturas.label}">
+                                    Gerenciar Candidaturas
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(vagasExpiradas)}">
+                        <td colspan="4" style="text-align: center; color: #777;" th:text="#{nenhumaVagaExpirada.message}">Nenhuma vaga com inscrições encerradas.</td>
                     </tr>
                 </tbody>
             </table>
@@ -54,7 +80,7 @@
             </div>
 
         </div>
-        <div th:replace="fragments/modal :: modal"></div>
+        <div th:replace="~{fragments/modal :: modal}"></div>
     </section>
 </body>
 </html>

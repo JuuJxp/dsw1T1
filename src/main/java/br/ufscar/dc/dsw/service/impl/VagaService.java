@@ -72,4 +72,17 @@ public class VagaService implements IVagaService {
         desativarVagasExpiradas();
         return dao.countByEmpresaAndAtivaTrue(empresa);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vaga> buscarVagasAbertasPorEmpresa(Empresa empresa) {
+        return dao.findByEmpresaAndDataLimiteInscricaoAfter(empresa, Date.valueOf(LocalDate.now()));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vaga> buscarVagasExpiradasPorEmpresa(Empresa empresa) {
+        desativarVagasExpiradas();
+        return dao.findByEmpresaAndDataLimiteInscricaoBefore(empresa, Date.valueOf(LocalDate.now()));
+    }
 }

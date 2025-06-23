@@ -25,6 +25,7 @@ import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.StatusCandidatura;
 import br.ufscar.dc.dsw.domain.Vaga;
 import br.ufscar.dc.dsw.service.spec.ICandidaturaService;
+import java.util.Date;
 import br.ufscar.dc.dsw.service.spec.IEmailService;
 import br.ufscar.dc.dsw.service.spec.IEmpresaService;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
@@ -152,6 +153,8 @@ public class CandidaturaController {
              return "redirect:/acessoNegado";
         }
 
+        boolean podeClassificar = vaga.getDataLimiteInscricao().before(new Date());
+        model.addAttribute("podeClassificar", podeClassificar);
         model.addAttribute("vaga", vaga);
         model.addAttribute("candidaturas", candidaturaService.buscarPorVaga(vaga));
         model.addAttribute("statusOptions", StatusCandidatura.values());
