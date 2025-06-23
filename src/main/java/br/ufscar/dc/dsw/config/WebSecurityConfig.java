@@ -32,7 +32,7 @@ public class WebSecurityConfig {
       .authorizeHttpRequests(auth -> auth
           .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
           // por enquanto deixar sem precisar logar essas rotas (depois precisa de login como admin)
-          .requestMatchers("/", "/error", "/login/**", "/usuarios/novo", "/profissionais/cadastrar", "/empresas/cadastrar").permitAll()
+          .requestMatchers("/", "/error", "/login/**", "/usuarios/novo", "/profissionais/cadastrar", "/empresas/cadastrar", "/acessoNegado").permitAll()
           .requestMatchers("/profissionais/salvar", "/empresas/salvar").permitAll()
           .requestMatchers("/vagas/listar**").permitAll()
 
