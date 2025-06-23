@@ -2,7 +2,7 @@ package br.ufscar.dc.dsw.domain;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.AttributeOverride;
@@ -45,12 +45,22 @@ public class Vaga extends AbstractEntity<Long> {
     @NotNull(message = "{NotNull.vaga.dataLimiteInscricao}")
     @FutureOrPresent(message = "{FutureOrPresent.vaga.dataLimiteInscricao}")
     @Column(name = "data_limite_inscricao", nullable = false)
-    private LocalDate dataLimiteInscricao;
+    private Date dataLimiteInscricao;
 
     @NotBlank(message = "{NotBlank.vaga.cidade}")
     @Size(max = 255, message = "{Size.vaga.cidade}")
     @Column(nullable = false, length = 255)
     private String cidade;
+
+    @NotBlank(message = "{NotBlank.vaga.estado}")
+    @Size(max = 255, message = "{Size.vaga.estado}")
+    @Column(nullable = false, length = 255)
+    private String estado;
+
+    @NotBlank(message = "{NotBlank.vaga.pais}")
+    @Size(max = 255, message = "{Size.vaga.pais}")
+    @Column(nullable = false, length = 255)
+    private String pais;
 
     @Column(name = "criado_em", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp criadoEm;
@@ -91,11 +101,11 @@ public class Vaga extends AbstractEntity<Long> {
         this.remuneracao = remuneracao;
     }
 
-    public LocalDate getDataLimiteInscricao() {
+    public Date getDataLimiteInscricao() {
         return dataLimiteInscricao;
     }
 
-    public void setDataLimiteInscricao(LocalDate dataLimiteInscricao) {
+    public void setDataLimiteInscricao(Date dataLimiteInscricao) {
         this.dataLimiteInscricao = dataLimiteInscricao;
     }
 
@@ -105,6 +115,22 @@ public class Vaga extends AbstractEntity<Long> {
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     public boolean isAtiva() {

@@ -55,6 +55,8 @@ CREATE TABLE Vagas (
     remuneracao DECIMAL(10, 2),
     data_limite_inscricao DATE NOT NULL,
     cidade VARCHAR(255) NOT NULL,
+    estado VARCHAR(255) NOT NULL,
+    pais VARCHAR(255) NOT NULL,
     ativa BOOLEAN DEFAULT TRUE,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_empresa) REFERENCES Empresas(id_usuario) ON DELETE CASCADE
@@ -100,9 +102,9 @@ INSERT INTO Profissionais (id_usuario, nome, cpf, telefone, sexo, data_nasciment
 
 -- Inserções na tabela Vagas
 -- id_empresa referencia o id_usuario da tabela Empresas
-INSERT INTO Vagas (id_empresa, titulo, descricao, remuneracao, data_limite_inscricao, cidade, ativa) VALUES
-(2, 'Desenvolvedor(a) Back-end Jr.', 'Buscamos desenvolvedor(a) com conhecimentos em Python, SQL e API REST.', 3500.00, '2025-07-30', 'São Paulo', TRUE),
-(3, 'Estagiário(a) de Marketing', 'Oportunidade para estudantes de Marketing, com foco em mídias sociais e análise de dados.', 1200.00, '2025-08-15', 'Rio de Janeiro', TRUE);
+INSERT INTO Vagas (id_empresa, titulo, descricao, remuneracao, data_limite_inscricao, cidade, estado, pais, ativa) VALUES
+(2, 'Desenvolvedor(a) Back-end Jr.', 'Buscamos desenvolvedor(a) com conhecimentos em Python, SQL e API REST.', 3500.00, '2025-07-30', 'São Paulo', "SP", "Brasil", TRUE),
+(3, 'Estagiário(a) de Marketing', 'Oportunidade para estudantes de Marketing, com foco em mídias sociais e análise de dados.', 1200.00, '2025-08-15', 'Rio de Janeiro', "RJ", "Brasil", TRUE);
 
 -- Inserções na tabela Candidaturas
 -- id_profissional referencia o id_usuario da tabela Profissionais
