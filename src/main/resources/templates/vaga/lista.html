@@ -16,7 +16,7 @@
             <div th:each="vaga : ${vagas}" class="job-card">
                 <div class="job-card-header">
                     <h2 th:text="${vaga.titulo}">Título da vaga</h2>
-                    <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/YYYY')}">xx/xx/xxxx</span>
+                    <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM/yyyy')}">xx/xx/xxxx</span>
                 </div>
                 <div class="job-details">
                     <span class="bold" th:text="${#numbers.formatCurrency(vaga.remuneracao)}">remuneração</span>
@@ -24,7 +24,7 @@
                 <div class="job-details company-info">
                     <span th:text="${vaga.empresa.nome}">Empresa ABC</span>
                     <a th:href="@{'/empresas/' + ${vaga.empresa.id} + '/vagas'}">
-                            + <span>x</span> anúncios dessa empresa!
+                            + <span th:text="${empresaVagasCountMap.get(vaga.empresa.id)}">x</span> anúncios dessa empresa!
                     </a>
                 </div>
                 <span th:text="${vaga.descricao}">descrição blablabla...</span>

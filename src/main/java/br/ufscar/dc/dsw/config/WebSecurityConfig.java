@@ -55,6 +55,9 @@ public class WebSecurityConfig {
         .logout(logout -> logout
           .logoutSuccessUrl("/") 
           .permitAll()
+        )
+        .exceptionHandling(exceptions -> exceptions
+          .accessDeniedPage("/acessoNegado") 
         );
     return http.build();
   }
