@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.domain;
 
 import java.util.List;
 
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -14,6 +15,7 @@ import jakarta.validation.constraints.Size;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Empresas")
+@AttributeOverride(name = "id", column = @Column(name = "id_empresa")) 
 @PrimaryKeyJoinColumn(name = "id_usuario")
 public class Empresa extends Usuario {
 

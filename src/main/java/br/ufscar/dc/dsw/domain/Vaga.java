@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -20,6 +21,7 @@ import jakarta.validation.constraints.Size;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Vagas")
+@AttributeOverride(name = "id", column = @Column(name = "id_vaga")) 
 public class Vaga extends AbstractEntity<Long> {
 
     @ManyToOne
@@ -32,7 +34,7 @@ public class Vaga extends AbstractEntity<Long> {
     private String titulo; 
 
     @NotBlank(message = "{NotBlank.vaga.descricao}")
-    @Size(max = 255, message = "{Size.vaga.titulo}")
+    @Size(max = 255, message = "{Size.vaga.descricao}")
     @Column(nullable = false, length = 255)
     private String descricao; 
 
@@ -58,6 +60,8 @@ public class Vaga extends AbstractEntity<Long> {
 
     @OneToMany(mappedBy = "vaga")
     private List<Candidatura> candidaturas;
+
+    public Vaga() {}
 
     public String getTitulo() {
         return titulo;

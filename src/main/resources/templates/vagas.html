@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vagas Gerais - Betwin Vagas</title>
+    
+    <style>
+        /* Estilos específicos para a página de Vagas Gerais */
+        .vagas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+
+        .vagas-header h1 {
+            font-size: 1.8em;
+            color: #330044; /* Roxo escuro */
+            margin: 0;
+        }
+
+        .vagas-header-buttons a {
+            margin-left: 10px;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .filter-section input {
+            border: 1px solid #550066; /* Borda roxa clara */
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1em;
+            flex-grow: 1; /* Permite que o input cresça */
+            max-width: 300px; /* Limita o tamanho do input */
+        }
+
+        .filter-section .action-button-purple {
+            padding: 10px 20px; /* Ajuste para o botão de busca */
+        }
+
+        .job-card {
+            background-color: #FFFFFF;
+            border: 1px solid #550066; /* Borda roxa clara */
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left; /* Alinha o texto à esquerda */
+            position: relative; /* Para posicionar o botão Candidatar-se */
+        }
+
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .job-card-header h2 {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive; /* Fonte similar à imagem */
+            color: #008000; /* Verde vibrante para o título da vaga */
+            font-size: 1.6em;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .job-card-header .deadline {
+            font-size: 1em;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .job-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            color: #444;
+        }
+
+        .job-details .company-info {
+            font-weight: bold;
+            color: #550066;
+        }
+
+        .job-details .company-info a {
+            color: #550066;
+            text-decoration: none;
+            font-weight: normal;
+        }
+        .job-details .company-info a:hover {
+            text-decoration: underline;
+        }
+
+        .job-details .remuneration {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .job-description {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .job-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .job-footer .location {
+            font-size: 0.95em;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .job-card .action-button-purple {
+            padding: 8px 18px; /* Botão de candidatar menor */
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <section class="layout-content" layout:fragment="corpo">
+        <div class="container">
+            <div class="filter-section">
+                <input type="text" id="filterLocation" placeholder="País, cidade ou estado..." />
+                <button type="button" class="button-style">Buscar Vaga</button>
+            </div>
+
+            <!-- Loop para exibir cada vaga -->
+            <div th:each="vaga : ${vagas}" class="job-card">
+                <div class="job-card-header">
+                    <h2 th:text="${vaga.titulo}">Título da vaga</h2>
+                    <span class="deadline" th:text="${#dates.format(vaga.dataLimiteInscricao, 'dd/MM')}">xx/xx</span>
+                </div>
+                <div class="job-details">
+                    <span>Tipo de trabalho: [A Combinar]</span> 
+                    <span class="remuneration" th:text="${#numbers.formatCurrency(vaga.remuneracao)}">remuneração</span>
+                </div>
+                <div class="job-details">
+                    <span class="company-info">
+                        <span th:text="${vaga.empresa.nome}">Empresa ABC</span>
+                        <!-- Link para outros anúncios da empresa (precisa de um endpoint /empresas/{id}/vagas) -->
+                        <a th:href="@{'/empresas/' + ${vaga.empresa.id} + '/vagas'}">
+                            + x anúncios dessa empresa!
+                        </a>
+                    </span>
+                </div>
+                <p class="job-description" th:text="${vaga.descricao}">descrição blablabla...</p>
+                <div class="job-footer">
+                    <span class="location" th:text="${vaga.cidade} + ' - ' + ${vaga.estado}">cidade - XX</span>
+                    <!-- Botão Candidatar-se -->
+                    <a th:href="@{/candidatar/{id}(id=${vaga.id})}" class="button-style">Candidatar-se</a>
+                </div>
+            </div>
+
+            <!-- Exemplo de vaga para visualização se não houver dados -->
+            <div th:if="${#lists.isEmpty(vagas)}" class="job-card" style="text-align: center; color: #777;">
+                <p>Nenhuma vaga encontrada no momento. Por favor, tente mais tarde.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Script JavaScript para funcionalidade do filtro (se for implementar) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        // Exemplo de como você poderia adicionar funcionalidade ao botão "Buscar Vaga"
+        // $('button').click(function() {
+        //     var locationFilter = $('#filterLocation').val();
+        //     // Aqui você faria uma requisição AJAX ou redirecionaria para uma URL com o filtro
+        //     // Ex: window.location.href = '/vagas?cidade=' + locationFilter;
+        //     console.log("Filtrar por: " + locationFilter);
+        // });
+        /*]]>*/
+    </script>
+</body>
+</html>
