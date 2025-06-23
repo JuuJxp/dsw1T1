@@ -25,4 +25,8 @@ public class HomeController {
 	public String login() {
 		return "login";
 	}
+	@GetMapping("/vagas")
+	public String vagas() {
+		return "vagas";
+	}
 }

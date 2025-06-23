@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.domain;
 
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -8,15 +9,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.sql.Timestamp;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Candidaturas", uniqueConstraints = {@UniqueConstraint(columnNames = {"id_profissional", "id_vaga"})})
+@AttributeOverride(name = "id", column = @Column(name = "id_candidatura")) 
 public class Candidatura extends AbstractEntity<Long> {
 
     @ManyToOne
