@@ -5,23 +5,31 @@
 </head>
 <body>
 	<section class="layout-content" layout:fragment="corpo">
+        <div class="container center">
+            <h1 class="title-text" style="font-size: 2em;">Betwin Vagas</h1>
+			<img alt="" th:src="@{/image/imageLogin.png}" style="width:150px; margin-top: -30px;"> 
 
-		<div class="container" style="text-align: center; width: 60%">
-			<h1>Betwin Vagas</h1>
-			<img alt="" th:src="@{/image/image.png}" style="width:100px;">
-			<div>
-                <p> Email: </p>
-				<input type="text" class="form-control" id="search" placeholder="Ex: Julia Tavares">
-                <p> Senha: </p>
-                <input type="password" class="form-control" id="search" placeholder="Digite sua senha">
-			</div>
-            
-            <div class="button-group">
-                <a class="button-style" th:href="@{/usuarios/logar/id_usuario}">Entrar</a>
-                <a class="button-style" th:href="@{/usuarios/novo}">Não possuo conta</a>
-            </div>
-		</div>
+            <!-- Fragmento para exibir alertas de sucesso ou falha -->
+            <div th:replace="fragments/alert"></div>
+            <form th:action="@{/logar}" method="POST" style="width: 40%;">
+                <!-- email -->
+                <div class="item-form">
+                    <label for="username">Email</label> 
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Ex: julia@profissional.com" required/>
+                </div>
 
+                <!-- senha -->
+                <div class="item-form">
+                    <label for="password">Senha</label> 
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Insira sua senha" required/>
+                </div>
+
+                <div class="center" style="flex-direction: row;">
+                    <button style="margin: 15px; width: 30%;" type="submit" class="button-style">Entrar</button>
+                    <a style="margin: 10px; width: 30%;" th:href="@{/usuarios/novo}" class="button-style">Criar conta</a>
+                </div>
+            </form>
+        </div>
 	</section>
 </body>
 </html>
