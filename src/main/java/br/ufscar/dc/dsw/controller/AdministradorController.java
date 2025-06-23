@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,10 @@ public class AdministradorController {
     @Autowired
     private IAdministradorService service;
 
+    @Autowired 
+    @Lazy
+    private BCryptPasswordEncoder encoder;
+
     @GetMapping("/cadastrar")
     public String cadastrar(Administrador administrador) {
         return "administrador/cadastro";
@@ -37,6 +43,9 @@ public class AdministradorController {
         if (result.hasErrors()) {
             return "administrador/cadastro";
         }
+        if (administrador.getId() == null) {
+            administrador.setSenha(encoder.encode(administrador.getSenha()));
+        }
         service.salvar(administrador);
         attr.addFlashAttribute("sucess", "Administrador inserido com sucesso.");
         return "redirect:/administradores/listar";
@@ -52,6 +61,12 @@ public class AdministradorController {
     public String editar(@Valid Administrador administrador, BindingResult result, RedirectAttributes attr) {
         if (result.hasErrors()) {
             return "administrador/cadastro";
+        }
+        Administrador administradorExistente = service.buscarPorId(administrador.getId());
+        if (administrador.getSenha() == null || administrador.getSenha().isEmpty()) { 
+            administrador.setSenha(administradorExistente.getSenha());
+        } else {
+            administrador.setSenha(encoder.encode(administrador.getSenha()));
         }
         service.salvar(administrador);
         attr.addFlashAttribute("sucess", "Administrador editado com sucesso.");
