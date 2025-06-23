@@ -15,7 +15,6 @@ import jakarta.validation.constraints.Size;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Empresas")
-@AttributeOverride(name = "id", column = @Column(name = "id_empresa")) 
 @PrimaryKeyJoinColumn(name = "id_usuario")
 public class Empresa extends Usuario {
 

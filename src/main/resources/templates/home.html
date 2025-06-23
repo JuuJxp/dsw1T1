@@ -6,12 +6,13 @@
 <body>
 	<section class="layout-content" layout:fragment="corpo">
 
-		<div class="container" style="text-align: center; width: 60%">
-			<h1>Betwin Vagas</h1>
-			<img alt="" th:src="@{/image/image.png}" style="width:350px;">
-			<div style="display: flex; justify-content: center; align-items: center; flex-direction: row;">
-				<input type="text" class="form-control" id="search" placeholder="Cidade, estado, país...">
-				<button class="button-style">Buscar</button>
+		<div class="container" style="text-align: center; width: 60%;">
+			<h1 class="title-text" style="margin-bottom: 2px;">Betwin Vagas</h1>
+			<h1 class="title-text" style="font-size: 2em; color: black">Procure pela vaga ideal!</h1>
+			<img alt="vagas" th:src="@{/image/image.png}" style="width:350px; margin-top:-40px">
+			<div style="display: flex; justify-content: center; align-items: center; flex-direction: row; margin-bottom: 30px;">
+				<input type="text" class="form-control" style="width: 60%;" placeholder="Procure por sua cidade...">
+				<button class="button-style" onclick="window.location.href='/vagas/listar';" style="margin-left: 15px;"> Buscar</button>
 			</div>
 		</div>
 
