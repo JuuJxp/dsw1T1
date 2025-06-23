@@ -2,20 +2,20 @@
 <html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8" />
-    <title>Perfil do Profissional</title>
+    <title th:text="#{perfilProfissionalTitulo.label}">Perfil do Profissional</title>
 </head>
 <body>
         <div class="profile-container" layout:fragment="corpo">
 
-            <div class="title-text">
+            <div class="title-text" th:utext="#{perfilAdminBoasVindas.label}">
                 <br>Bem vindo de volta!
                 <br>o que deseja?
             </div>
 
             <div class="button-group">
-                <a class="button-style" th:href="@{/candidaturas/minhasCandidaturas}">Ver minhas candidaturas</a>
+                <a class="button-style" th:href="@{/candidaturas/minhasCandidaturas}" th:text="#{verMinhasCandidaturas.label}">Ver minhas candidaturas</a>
                 
-                <a class="button-style" th:href="@{/vagas/listar}">Candidatar à nova vaga</a>
+                <a class="button-style" th:href="@{/vagas/listar}" th:text="#{candidatarNovaVaga.label}">Candidatar à nova vaga</a>
             </div>
         </div>
 
