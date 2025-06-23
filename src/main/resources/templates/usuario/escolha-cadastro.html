@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Escolha seu Cadastro</title>
+</head>
+<body>
+    <section class="layout-content" layout:fragment="corpo">
+        <div class="container center"> <h2 class="title-text">Seja bem-vindo(a) ao BetwinVagas!</h2> <p>Escolha como você gostaria de se cadastrar:</p>
+
+            <div class="d-grid gap-2 col-6 mx-auto mt-4">
+                <a th:href="@{/profissionais/cadastrar}" class="button-style btn-lg mb-3">
+                    Sou Profissional
+                </a>
+                <a th:href="@{/empresas/cadastrar}" class="button-style btn-lg">
+                    Sou Empresa
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
