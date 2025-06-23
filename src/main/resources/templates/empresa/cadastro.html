@@ -12,7 +12,8 @@
 
           <form th:action="${empresa.id == null} ? @{/empresas/salvar} : @{/empresas/editar}"
                 th:object="${empresa}" method="POST" style="width: 40%;">
-              
+
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
               <input type="hidden" id="id" th:field="*{id}" />
               <input type="hidden" th:field="*{papel}" /> 
 

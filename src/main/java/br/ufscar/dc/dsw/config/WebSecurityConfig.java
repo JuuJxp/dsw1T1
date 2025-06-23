@@ -31,7 +31,6 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-      .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(auth -> auth
           .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
           // por enquanto deixar sem precisar logar essas rotas (depois precisa de login como admin)
