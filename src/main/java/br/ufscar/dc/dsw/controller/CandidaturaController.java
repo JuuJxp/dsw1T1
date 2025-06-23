@@ -1,8 +1,14 @@
 package br.ufscar.dc.dsw.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,15 +95,44 @@ public class CandidaturaController {
             return "redirect:/erro?msg=Não encontramos essa vaga ou profissional";
         }
 
+        try {
+        // Verifica se o arquivo não está vazio e se é um PDF
+        if (file.isEmpty() || !file.getContentType().equals("application/pdf")) {
+            attr.addFlashAttribute("fail", "Por favor, anexe um currículo em formato PDF.");
+            return "redirect:/candidaturas/candidatar/" + idVaga;
+        }
             Candidatura candidatura = new Candidatura();
             candidatura.setProfissional(profissional);
             candidatura.setVaga(vaga);
             candidatura.setStatusVaga(StatusCandidatura.ABERTO);
 
+            candidatura.setCurriculo(file.getBytes());
+
             candidaturaService.salvar(candidatura);
             attr.addFlashAttribute("sucess", "Candidatura realizada com sucesso!");
-        
+        } catch (IOException e) {
+        attr.addFlashAttribute("fail", "Ocorreu um erro ao processar o seu currículo.");
+        return "redirect:/candidaturas/candidatar/" + idVaga;
+        }
         return "redirect:/candidaturas/minhasCandidaturas";
+    }
+
+    @GetMapping("/curriculo/{id}") public ResponseEntity<Resource> baixarCurriculo(@PathVariable("id") Long id) {
+        Candidatura candidatura = candidaturaService.buscarPorId(id);
+        
+        if (candidatura == null || candidatura.getCurriculo() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Resource resource = new ByteArrayResource(candidatura.getCurriculo());
+        
+        String filename = "curriculo-" + candidatura.getProfissional().getNome().replace(" ", "_") + ".pdf";
+
+        return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_PDF)
+            // O header "Content-Disposition" faz download
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+            .body(resource);
     }
 
     @GetMapping("/minhasCandidaturas")
