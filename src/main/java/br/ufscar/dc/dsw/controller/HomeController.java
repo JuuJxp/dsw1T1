@@ -13,4 +13,16 @@ public class HomeController {
 	public String perfilAdministrador() {
 		return "perfilAdministrador";
 	}
+	@GetMapping("/perfilEmpresa")
+	public String perfilEmpresa() {
+		return "perfilEmpresa";
+	}
+	@GetMapping("/perfilProfissional")
+	public String perfilProfissional() {
+		return "perfilProfissional";
+	}
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
 }
