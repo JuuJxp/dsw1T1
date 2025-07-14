@@ -1,7 +1,9 @@
 # dsw1T1
 
 Trabalho 1 realizado por Julia e Luisa Tavares
+
 # Betwin Vagas
+
 ## Processo de Desenvolvimento
 
 O desenvolvimento do projeto foi iniciado utilizando a arquitetura de referência do "Roteiro 08" do professor Delano Beder. A entidade `Usuario` foi a primeira a ser implementada, servindo como modelo para estabelecer o padrão de desenvolvimento que foi seguido para todas as outras entidades do sistema. Este padrão consiste na separação de responsabilidades nas camadas de Domain, Acesso a Dados (DAO), Serviços e Controladores.
@@ -16,8 +18,7 @@ Na fase final, o projeto foi refinado com validação de erros nos formulários 
 
 A gestão das tarefas e o acompanhamento do progresso do desenvolvimento foram realizados através de um quadro Kanban na plataforma Trello, para não irmos esquecendo de coisas importantes ao longo do desenvolvimento.
 
-* **Link do Quadro:** [https://trello.com/b/MnkNwGzk/kanban-quadro-modelo](https://trello.com/b/MnkNwGzk/kanban-quadro-modelo)
-
+- **Link do Quadro:** [https://trello.com/b/MnkNwGzk/kanban-quadro-modelo](https://trello.com/b/MnkNwGzk/kanban-quadro-modelo)
 
 ## Execução e Testes
 
@@ -37,8 +38,8 @@ O sistema estará acessível em `http://localhost:8080`.
 
 A aplicação utiliza um banco de dados em memória que é criado e populado na inicialização através do Hibernate/JPA. Um usuário com perfil de **Administrador** é criado por padrão para permitir o início das operações no sistema, caso não quiser criar, também possui um profissional e uma empresa.
 
-* **Usuário Admin:** `admin@example.com`
-* **Senha:** `admin_pass_123`
+- **Usuário Admin:** `admin@example.com`
+- **Senha:** `admin_pass_123`
 
 ### Fluxo de Teste Recomendado para testar tudo
 
@@ -48,6 +49,10 @@ A aplicação utiliza um banco de dados em memória que é criado e populado na 
 4.  **Verificação da Empresa:** Retorne ao sistema com o usuário da empresa. Verifique a vaga publicada para visualizar a lista de candidaturas. O sistema deve permitir a análise do perfil e o **download do currículo** do candidato, bem como a **alteração de status** da candidatura se a vaga já estiver no período de análise (após expirar sua data de inscrição).
 5.  **Verificação de Notificação:** Confirme se um **e-mail de notificação** sobre a alteração de status foi enviado ao endereço de e-mail associado ao usuário profissional.
 
+## TESTES API REST PELO INSOMNIA
+
+https://docs.google.com/document/d/1KQEENIbqOYvLKhzeuYIKmMBtiojWp0iWR0E8gDiETtw/edit?usp=sharing
+
 ## Protótipo de Interface
 
 O desenvolvimento das telas foi guiado pelo protótipo que criamos no Excalidraw para termos uma ideia de como iriamos querer
@@ -56,8 +61,7 @@ O desenvolvimento das telas foi guiado pelo protótipo que criamos no Excalidraw
 
 ## Desenvolvedoras
 
-* Julia Tavares dos Santos
-* Luisa Tavares dos Santos
+- Julia Tavares dos Santos
+- Luisa Tavares dos Santos
 
 Obrigaada :D
-
