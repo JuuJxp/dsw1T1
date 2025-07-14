@@ -10,11 +10,9 @@
 			<h1 class="title-text" style="margin-bottom: 2px;">Betwin Vagas</h1>
 			<h1 class="title-text" style="font-size: 2em; color: black" th:text="#{procureVagaIdeal.label}">Procure pela vaga ideal!</h1>
 			<img alt="vagas" th:src="@{/image/image.png}" style="width:350px; margin-top:-40px">
-			<form th:action="@{/vagas/listar}" method="GET" class="busca">
-                <input type="text" id="filterLocation" name="cidade" 
-                       th:placeholder="#{filtrarCidadePlaceholder.label}" th:value="${param.cidade}" />
-                <button type="submit" class="button-style" th:text="#{buscarVaga.label}">Buscar Vaga</button>
-            </form>
+			<form th:action="@{/vagas/listar}" method="GET" class="busca" style="max-width: 400px; width: 100%; margin-left: auto; margin-right: auto;">
+    		<button type="submit" class="button-style" style="width: 100%;" th:text="#{procureVagaIdeal.label}">Procure pela vaga ideal!</button>
+			</form>
 		</div>
 
 	</section>
