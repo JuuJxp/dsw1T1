@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain; 
 
 import br.ufscar.dc.dsw.service.spec.IUsuarioService;
@@ -26,6 +27,7 @@ public class WebSecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
       .authorizeHttpRequests(auth -> auth
+          .requestMatchers("/api/**").permitAll()
           .requestMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
           .requestMatchers("/vagas/listar**", "/", "/error", "/login/**").permitAll()
           .requestMatchers("/perfilAdministrador", "/profissionais/cadastrar", "/empresas/cadastrar", "/usuarios/novo", "/profissionais/salvar", "/profissionais/editar", "/empresas/salvar", "/empresas/listar", "/empresas/editar/**", "/empresas/excluir/**", "/profissionais/listar", "/profissionais/excluir/**").hasRole("ADMIN")
@@ -37,6 +39,7 @@ public class WebSecurityConfig {
 
           .anyRequest().authenticated()
         )
+        .csrf(AbstractHttpConfigurer::disable)
         .formLogin(form -> form
           .loginPage("/login") 
           .successHandler(customAuthenticationSuccessHandler)

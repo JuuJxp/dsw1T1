@@ -14,4 +14,5 @@ public interface IEmpresaService {
     Empresa buscarPorEmail(String email);
     Empresa buscarPorCnpj(String cnpj);
     void validarCamposUnicos(Empresa empresa, Errors errors);
+    List<Empresa> buscarTodasPorCidade(String cidade);
 }

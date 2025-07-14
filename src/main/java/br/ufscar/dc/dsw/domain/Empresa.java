@@ -2,6 +2,8 @@ package br.ufscar.dc.dsw.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -31,14 +33,15 @@ public class Empresa extends Usuario {
     @Column(nullable = false, length = 255)
     private String cidade;
 
-     @Size(max = 255, message = "{Size.empresa.estado}")
-     @Column(length = 255)
-     private String estado;
+    @Size(max = 255, message = "{Size.empresa.estado}")
+    @Column(length = 255)
+    private String estado;
 
-     @Size(max = 255, message = "{Size.empresa.pais}")
-     @Column(length = 255)
-     private String pais;
+    @Size(max = 255, message = "{Size.empresa.pais}")
+    @Column(length = 255)
+    private String pais;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "empresa")
     private List<Vaga> vagas;
 

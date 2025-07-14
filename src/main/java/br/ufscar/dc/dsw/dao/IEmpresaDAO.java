@@ -11,4 +11,7 @@ public interface IEmpresaDAO extends CrudRepository<Empresa, Long> {
 
     @Override
     List<Empresa> findAll();
+
+    List<Empresa> findAllByCidade(String cidade);
+
 }
