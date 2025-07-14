@@ -64,4 +64,9 @@ public class EmpresaService implements IEmpresaService {
     public Empresa buscarPorCnpj(String cnpj) {
         return dao.findByCnpj(cnpj);
     }
+
+    @Transactional(readOnly = true)
+    public List<Empresa> buscarTodasPorCidade(String cidade) {
+        return dao.findAllByCidade(cidade);
+    }
 }

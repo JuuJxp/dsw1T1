@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +26,7 @@ import jakarta.validation.constraints.Size;
 @AttributeOverride(name = "id", column = @Column(name = "id_vaga")) 
 public class Vaga extends AbstractEntity<Long> {
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_empresa", nullable = false)
     private Empresa empresa;

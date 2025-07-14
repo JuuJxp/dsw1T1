@@ -12,7 +12,7 @@
             <form th:action="${vaga.id == null} ? @{/vagas/salvar} : @{/vagas/editar}"
                   th:object="${vaga}" method="POST" style="width: 40%;">
                 
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
                 <!-- Campo oculto para o ID, usado para diferenciar cadastro de edição -->
                 <input type="hidden" id="id" th:field="*{id}" />
 
