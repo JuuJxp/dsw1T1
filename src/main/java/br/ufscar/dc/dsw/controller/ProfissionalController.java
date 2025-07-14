@@ -74,7 +74,7 @@ public class ProfissionalController {
             profissionalService.excluir(id);
             attr.addFlashAttribute("sucess", "Profissional excluído com sucesso.");
         } catch (Exception e) {
-                return "redirect:/erro?msg=Não foi possível excluir o profissional. Verifique as relações.";
+                return "redirect:/erro?msg=Erro ao tentar excluir o profissional, verifique suas candidaturas. Apenas consegue excluir profissionais sem candidaturas ativas.";
             }
         return "redirect:/profissionais/listar";
     }

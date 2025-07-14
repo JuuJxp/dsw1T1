@@ -3,6 +3,8 @@ package br.ufscar.dc.dsw.domain;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,6 +45,7 @@ public class Profissional extends Usuario {
 
     @NotNull(message = "{NotNull.profissional.dataNascimento}")
     @Column(name = "data_nascimento", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataNascimento;
 
     @NotBlank(message = "{NotBlank.profissional.cidade}")
