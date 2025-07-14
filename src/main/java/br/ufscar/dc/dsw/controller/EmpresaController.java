@@ -57,6 +57,10 @@ public class EmpresaController {
         
         service.validarCamposUnicos(empresa, result);
 
+        if (result.hasErrors()) {
+            return "empresa/cadastro";
+        }
+        
         service.salvar(empresa);
         attr.addFlashAttribute("sucess", "Empresa editada com sucesso.");
         return "redirect:/empresas/listar";

@@ -3,17 +3,16 @@ package br.ufscar.dc.dsw.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
  
 import br.ufscar.dc.dsw.dao.ICandidaturaDAO;
 import br.ufscar.dc.dsw.dao.IProfissionalDAO;
-import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
+import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 
 @Service
 @Transactional(readOnly = false)
@@ -23,54 +22,21 @@ public class ProfissionalService implements IProfissionalService {
     IProfissionalDAO profissionalDAO;
 
     @Autowired
-    IUsuarioDAO usuarioDAO; 
+    private IUsuarioService usuarioService;
 
     @Autowired
     ICandidaturaDAO candidaturaDAO;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
     @Override
     public void salvar(Profissional profissional) {
-        if (profissional.getId() == null) {
-            profissional.setSenha(passwordEncoder.encode(profissional.getSenha()));
-        }else {
-            Profissional profissionalExistente = profissionalDAO.findById(profissional.getId()).orElse(null);
-             if (profissional.getSenha() == null || profissional.getSenha().isEmpty()) {
-                if (profissionalExistente != null) {
-                    profissional.setSenha(profissionalExistente.getSenha());
-                }
-            } else {
-                profissional.setSenha(passwordEncoder.encode(profissional.getSenha())); 
-            }
-        }
-        profissionalDAO.save(profissional);
+        usuarioService.salvar(profissional);
     }
 
     public void validarCamposUnicos(Profissional profissional, Errors errors) {
-        Usuario usuarioPorEmail = usuarioDAO.findByEmail(profissional.getEmail());
-        
-        if (profissional.getId() == null) {
-            if (usuarioPorEmail != null) {
-                errors.rejectValue("email", "Unique.usuario.email", "E-mail já cadastrado.");
-            }
-        } else {
-            if (usuarioPorEmail != null && !usuarioPorEmail.getId().equals(profissional.getId())) {
-                errors.rejectValue("email", "Unique.usuario.email", "E-mail já cadastrado.");
-            }
-        }
-
+        usuarioService.validarEmailUnico(profissional, errors);
         Profissional profissionalPorCpf = profissionalDAO.findByCpf(profissional.getCpf());
-
-        if (profissional.getId() == null) {
-            if (profissionalPorCpf != null) {
-                errors.rejectValue("cpf", "Unique.profissional.cpf", "CPF já cadastrado.");
-            }
-        } else {
-            if (profissionalPorCpf != null && !profissionalPorCpf.getId().equals(profissional.getId())) {
-                errors.rejectValue("cpf", "Unique.profissional.cpf", "CPF já cadastrado.");
-            }
+        if (profissionalPorCpf != null && !profissionalPorCpf.getId().equals(profissional.getId())) {
+            errors.rejectValue("cpf", "Unique.profissional.cpf", "CPF já cadastrado.");
         }
     }
 
@@ -82,10 +48,9 @@ public class ProfissionalService implements IProfissionalService {
         profissionalDAO.deleteById(id);
     }
 
-    @Override
     @Transactional(readOnly = true)
     public Profissional buscarPorId(Long id) {
-        return profissionalDAO.findById(id.longValue());
+        return profissionalDAO.findById(id).orElse(null);
     }
 
     @Override
@@ -97,7 +62,12 @@ public class ProfissionalService implements IProfissionalService {
     @Override
     @Transactional(readOnly = true)
     public Profissional buscarPorEmail(String email) {
-        return profissionalDAO.findByEmail(email);
+        Usuario usuario = usuarioService.buscarPorEmail(email);
+
+        if (usuario instanceof Profissional) {
+            return (Profissional) usuario;
+        }
+        return null;
     }
 
     @Override

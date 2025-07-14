@@ -23,11 +23,6 @@ import jakarta.validation.constraints.Size;
 @PrimaryKeyJoinColumn(name = "id_usuario")
 public class Profissional extends Usuario {
 
-    @NotBlank(message = "{NotBlank.profissional.nome}")
-    @Size(max = 255, message = "{Size.profissional.nome}")
-    @Column(nullable = false, length = 255)
-    private String nome;
-
     @NotBlank(message = "{NotBlank.profissional.cpf}")
     @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}", message = "{Pattern.profissional.cpf}")
     @Column(nullable = false, length = 14, unique = true)
@@ -66,14 +61,6 @@ public class Profissional extends Usuario {
 
     public Profissional() {
         setPapel(PapelUsuario.PROFISSIONAL);
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getCpf() {

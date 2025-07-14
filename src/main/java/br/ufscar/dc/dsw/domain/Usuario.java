@@ -19,7 +19,12 @@ import jakarta.validation.constraints.Size;
 @Table(name = "Usuarios")
 @Inheritance(strategy = InheritanceType.JOINED) 
 @AttributeOverride(name = "id", column = @Column(name = "id_usuario")) 
-public abstract class Usuario extends AbstractEntity<Long> {
+public class Usuario extends AbstractEntity<Long> {
+
+    @NotBlank(message = "{NotBlank.usuario.nome}")
+    @Size(max = 255, message = "{Size.usuario.nome}")
+    @Column(nullable = false, length = 255)
+    private String nome;
 
     // Atributo email (não vazio, tamanho máximo 255 caracteres, deve ser um email válido)
 	@NotBlank(message = "{NotBlank.usuario.email}")
@@ -60,6 +65,14 @@ public abstract class Usuario extends AbstractEntity<Long> {
         return senha;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     public void setSenha(String senha) {
         this.senha = senha;
     }

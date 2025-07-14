@@ -3,16 +3,15 @@ package br.ufscar.dc.dsw.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 
 import br.ufscar.dc.dsw.dao.IEmpresaDAO;
-import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Empresa;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.service.spec.IEmpresaService;
+import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 
 @Service
 @Transactional(readOnly = false)
@@ -22,50 +21,18 @@ public class EmpresaService implements IEmpresaService {
     IEmpresaDAO dao;
 
     @Autowired
-    IUsuarioDAO usuarioDAO;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private IUsuarioService usuarioService;
 
     public void salvar(Empresa empresa) {
-        if (empresa.getId() == null) {
-            empresa.setSenha(passwordEncoder.encode(empresa.getSenha()));
-        } else {
-            Empresa empresaExistente = dao.findById(empresa.getId()).orElse(null);
-            if (empresa.getSenha() == null || empresa.getSenha().isEmpty()) {
-                if (empresaExistente != null) {
-                    empresa.setSenha(empresaExistente.getSenha()); 
-                }
-            } else {
-                empresa.setSenha(passwordEncoder.encode(empresa.getSenha()));
-            }
-        }
-        dao.save(empresa);
+        usuarioService.salvar(empresa);
     }
 
     public void validarCamposUnicos(Empresa empresa, Errors errors) {
-        Usuario usuarioPorEmail = usuarioDAO.findByEmail(empresa.getEmail());
-
-        if (empresa.getId() == null) { 
-            if (usuarioPorEmail != null) {
-                errors.rejectValue("email", "Unique.usuario.email", "E-mail já cadastrado.");
-            }
-        } else { 
-            if (usuarioPorEmail != null && !usuarioPorEmail.getId().equals(empresa.getId())) {
-                errors.rejectValue("email", "Unique.usuario.email", "E-mail já cadastrado.");
-            }
-        }
+        usuarioService.validarEmailUnico(empresa, errors);
 
         Empresa empresaPorCnpj = dao.findByCnpj(empresa.getCnpj());
-
-        if (empresa.getId() == null) {
-            if (empresaPorCnpj != null) {
-                errors.rejectValue("cnpj", "Unique.empresa.cnpj", "CNPJ já cadastrado.");
-            }
-        } else {
-            if (empresaPorCnpj != null && !empresaPorCnpj.getId().equals(empresa.getId())) {
-                errors.rejectValue("cnpj", "Unique.empresa.cnpj", "CNPJ já cadastrado.");
-            }
+        if (empresaPorCnpj != null && !empresaPorCnpj.getId().equals(empresa.getId())) {
+            errors.rejectValue("cnpj", "Unique.empresa.cnpj", "CNPJ já cadastrado.");
         }
     }
     
@@ -75,7 +42,7 @@ public class EmpresaService implements IEmpresaService {
 
     @Transactional(readOnly = true)
     public Empresa buscarPorId(Long id) {
-        return dao.findById(id.longValue());
+        return dao.findById(id).orElse(null);
     }
 
     @Transactional(readOnly = true)
@@ -85,7 +52,12 @@ public class EmpresaService implements IEmpresaService {
 
     @Transactional(readOnly = true)
     public Empresa buscarPorEmail(String email) {
-        return dao.findByEmail(email);
+        Usuario usuario = usuarioService.buscarPorEmail(email);
+        
+        if (usuario instanceof Empresa) {
+            return (Empresa) usuario;
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)

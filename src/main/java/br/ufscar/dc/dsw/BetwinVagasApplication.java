@@ -8,14 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import br.ufscar.dc.dsw.dao.IAdministradorDAO;
 import br.ufscar.dc.dsw.dao.IEmpresaDAO;
 import br.ufscar.dc.dsw.dao.IProfissionalDAO;
-import br.ufscar.dc.dsw.domain.Administrador;
+import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Empresa;
 import br.ufscar.dc.dsw.domain.PapelUsuario;
 import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.SexoProfissional;
+import br.ufscar.dc.dsw.domain.Usuario;
 
 @SpringBootApplication
 public class BetwinVagasApplication {
@@ -25,15 +25,16 @@ public class BetwinVagasApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(IAdministradorDAO administradorDAO, IEmpresaDAO empresaDAO, IProfissionalDAO profissionalDAO, BCryptPasswordEncoder encoder) {
+	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, IEmpresaDAO empresaDAO, IProfissionalDAO profissionalDAO, BCryptPasswordEncoder encoder) {
 		return (args) -> {
-			if (administradorDAO.findByEmail("admin@example.com") == null) {
-				Administrador adm = new Administrador();
+			if (usuarioDAO.findByEmail("admin@example.com") == null) {
+				Usuario adm = new Usuario();
 				adm.setEmail("admin@example.com");
 				adm.setSenha(encoder.encode("admin_pass_123"));
 				adm.setNome("Administrador Principal");
 				adm.setPapel(PapelUsuario.ADMIN);
-				administradorDAO.save(adm);
+				adm.setAtivo(true);
+				usuarioDAO.save(adm);
 			}
 
 			if (empresaDAO.findByCnpj("00.000.000/0001-01") == null) {
