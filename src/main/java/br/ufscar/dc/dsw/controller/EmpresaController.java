@@ -68,7 +68,7 @@ public class EmpresaController {
             service.excluir(id);
             attr.addFlashAttribute("sucess", "Empresa excluída com sucesso.");
         } catch (Exception e) {
-            return "redirect:/erro?msg=Não foi possível excluir a empresa. Verifique se ela possui vagas ativas.";
+            return "redirect:/erro?msg=Erro ao tentar excluir empresa, verifique vagas em aberto. So pode excluir empresas sem vagas ativas.";
         }
         return "redirect:/empresas/listar";
     }
