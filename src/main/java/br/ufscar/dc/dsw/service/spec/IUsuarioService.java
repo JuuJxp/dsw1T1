@@ -1,6 +1,9 @@
 package br.ufscar.dc.dsw.service.spec;
 
 import java.util.List;
+
+import org.springframework.validation.Errors;
+
 import br.ufscar.dc.dsw.domain.Usuario;
 
 public interface IUsuarioService {
@@ -9,5 +12,5 @@ public interface IUsuarioService {
     List<Usuario> buscarTodos();
     void salvar(Usuario usuario);
     void excluir(Long id);
-    // boolean usuarioJaExiste(String email); // Exemplo de outros serviços
+    void validarEmailUnico(Usuario usuario, Errors errors);
 }

@@ -22,11 +22,6 @@ public class Empresa extends Usuario {
     @Column(nullable = false, length = 18, unique = true)
     private String cnpj;
 
-    @NotBlank(message = "{NotBlank.empresa.nome}")
-    @Size(max = 255, message = "{Size.empresa.nome}")
-    @Column(nullable = false, length = 255)
-    private String nome;
-
     @NotBlank(message = "{NotBlank.empresa.descricao}")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String descricao;
@@ -57,14 +52,6 @@ public class Empresa extends Usuario {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getDescricao() {
