@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -25,7 +26,6 @@ import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.StatusCandidatura;
 import br.ufscar.dc.dsw.domain.Vaga;
 import br.ufscar.dc.dsw.service.spec.ICandidaturaService;
-import java.util.Date;
 import br.ufscar.dc.dsw.service.spec.IEmailService;
 import br.ufscar.dc.dsw.service.spec.IEmpresaService;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
@@ -172,6 +172,11 @@ public class CandidaturaController {
         if (candidatura == null || !candidatura.getVaga().getEmpresa().getId().equals(empresa.getId())) {
              attr.addFlashAttribute("fail", "Acesso não autorizado ou candidatura não encontrada.");
              return "redirect:/vagas/minhasVagas";
+        }
+
+        if (candidatura.getStatusVaga() == StatusCandidatura.NAO_SELECIONADO) {
+            attr.addFlashAttribute("fail", "Esta candidatura já foi finalizada e não pode ser alterada.");
+            return "redirect:/candidaturas/gerenciar/" + candidatura.getVaga().getId();
         }
 
         candidatura.setStatusVaga(status);
